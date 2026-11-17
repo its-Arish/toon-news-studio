@@ -22,6 +22,8 @@ Latest news stories told as 2D cartoon storytelling. Inspired by fast cartoon-ex
   - Head PNG lives in `assets/characters/<name>/head.png`, with its neck pivot point noted in code.
   - Body: 2-bone arms and legs (elbows/knees bend), 3-prong fork hands, outward feet (front view) or forward feet (side view).
   - Wanted head variants for full acting: eyes closed, 3–4 mouth shapes, surprised, worried/sad, angry, side profile. Same drawing, only the face changes.
+- **Faces**: `tools/split_face.py` splits the drawn head into a blank face + the original eye and brow sprites; `toonkit/face.py` puts them back with motion. 16 expressions (smile, neutral, happy, laugh, surprised, shock, worried, sad, angry, smug, tired, mad, determined, shout, dreamy, dead), automatic blinking, and a talking mouth (`talk=` 0–1). Pick an expression for every shot that matches the beat; switch mid-shot with keyframes `expr=[(0, "neutral"), (0.8, "shock")]`. The narrator is not the character, so he only "talks" in scenes where he is speaking in the story (interviews, auditions, shouting).
+- **Dark scenes**: characters get an automatic soft halo when the background behind them is dark, so black ink lines stay readable.
 - **Side characters** = coded round heads (dot eyes, small smile, blush, hair cap; `style="short"` or `"long"`), same stick body, head scale 1.4 so they match the main head size.
 - **Anonymous groups** = black suit silhouettes (`suit_figure`) or crowds of coded heads.
 - **Other real people** in a story appear as generic coded figures with a **name label** — no drawn likeness.
@@ -43,13 +45,18 @@ Latest news stories told as 2D cartoon storytelling. Inspired by fast cartoon-ex
 - **Fact-check the script against current sources before animating.** Fix dates, quotes and attributions.
 - **No copyrighted characters, logos or signature costumes** (superhero suits/logos, 007 gun barrel, film-franchise characters). Show those moments with our own stand-ins: a plain mask in a rainy red city, a tuxedo + martini, a hedge maze + trophy, a moonlit forest with sparkles.
 
-## 6. Deliverables
+## 6. Sound
+- `toonkit/sfx.py` synthesizes every effect (no samples to license): a quiet whoosh on every cut, pops for labels, stamps, dings and cash for money, shutters, thunder, rain/crowd/sea/wind beds, typing for title cards, etc. Each shot lists its effects: `@at(t, sfx=[(0.3, "pop"), (1.2, "ding")])`.
+- One full-length SFX track is built from the event list (`build_track`).
+- Music is chosen by the user; any track Claude suggests is marked "not yet heard" until previewed.
+
+## 7. Deliverables
 - Video + captions + SFX in one file; voiceover as a separate file; music and SFX also as separate full-length tracks of identical length.
 - 1280×720, 30 fps, H.264 (crf 18).
 
-## 7. Workflow
+## 8. Workflow
 1. Script → fact-check → corrected script.
-2. Voiceover (Gemini TTS) → line timings (until then: placeholder timing at 2.6 words/s, `caps_from_lines`).
+2. Voiceover (Gemini TTS) + its .srt → shot times come from the SRT cue starts (`C(n)`); captions use SRT timing with speech-to-text mistakes fixed back to the script's spelling. Until a voiceover exists: placeholder timing at 2.6 words/s (`caps_from_lines`).
 3. Shot list keyed to script lines: `SHOTS = [(start_time, shot_fn, grayscale), ...]`, 2–3 s each.
 4. Render **stills** at the busiest moment of every shot and look at them.
 5. Render each shot to its own file in parallel, join with the concat demuxer (`render_all`).

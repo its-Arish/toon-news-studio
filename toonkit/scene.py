@@ -28,8 +28,13 @@ def glow(c, x, y, r, rgb, a):
 def label(c, s, x, y, size=30, t=1.0, rot=-0.03, fill="#ffffff", ink="#1a1a1a"):
     if t <= 0: return
     k = ease_out_back(t)
-    c.save(); c.translate(x, y); c.rotate(rot); c.scale(k, k)
     c.select_font_face("Patrick Hand"); c.set_font_size(size); e = c.text_extents(s)
+    dx, dy = c.user_to_device(x, y); sc = math.hypot(*c.user_to_device_distance(1, 0))
+    hw = (e.width / 2 + 22) * sc; hh = size * 0.7 * sc
+    ndx = min(max(dx, hw + 8), W - hw - 8) if hw * 2 < W - 16 else dx
+    ndy = min(max(dy, hh + 8), H - 112 - hh)
+    if (ndx, ndy) != (dx, dy): x, y = c.device_to_user(ndx, ndy)
+    c.save(); c.translate(x, y); c.rotate(rot); c.scale(k, k)
     rrect(c, -e.width / 2 - 16, -size * 0.62, e.width + 32, size * 1.24, 6); fill_stroke(c, fill, 3.5, ink)
     text(c, s, 0, 0, size, color=ink); c.restore()
 
