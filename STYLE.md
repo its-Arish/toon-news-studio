@@ -26,7 +26,9 @@ Latest news stories told as 2D cartoon storytelling. Inspired by fast cartoon-ex
 - **Dark scenes**: characters get an automatic soft halo when the background behind them is dark, so black ink lines stay readable.
 - **Side characters** = coded round heads (dot eyes, small smile, blush, hair cap; `style="short"` or `"long"`), same stick body, head scale 1.4 so they match the main head size.
 - **Anonymous groups** = black suit silhouettes (`suit_figure`) or crowds of coded heads.
-- **Other real people** in a story appear as generic coded figures with a **name label** — no drawn likeness.
+- **Other real people** in a story appear as generic coded figures with a **name label** — no drawn likeness, unless the creator supplies a drawn caricature for them (see below).
+- **Character folders**: `assets/characters/<who>/` = `head.png` (+ `boxes.json` → `python3 tools/split_face.py assets/characters/<who>` makes the face parts and `face.json`). Draw any of them with `kit.rob(..., who="<who>")`. Per-character options in `boxes.json`: `pivot` (chin point), `scale` (head size on the body), `ink` (`[0,0,0]` = pure black lines), `hands` (`fork` or `hook`), `brow` (`dark`/`yellow`), `fill` (`inpaint` for shaded faces). Current: `rob` (Pattinson episode), `trump` (pure black stick body, hook hands, head ×1.3 — from the creator's drawing).
+- **Real public figures as caricatures**: they only act out what they actually did or said (lip-sync only on real quotes, shown as quotes); no invented statements, no humiliating gags on serious beats; claims about them are shown with their side's response.
 - Actions available (`toonkit/rig.py`): `A_rest`, `A_talk`, `A_walk`, `A_wave`, `A_point`, `A_shrug`, `A_shock`; blend between with `lerpP`; lie down / fall with `person(..., rot=...)`; masks/props drawn over the head.
 
 ## 3. Look

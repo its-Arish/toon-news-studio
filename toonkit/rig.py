@@ -42,6 +42,13 @@ def wline(c, pts, frame, amp=1.6, seed=0):
     c.set_source_rgb(*INK); c.set_line_width(8); c.set_line_cap(cairo.LINE_CAP_ROUND)
     c.set_line_join(cairo.LINE_JOIN_ROUND); c.stroke()
 
+def hand_hook(c, wrist, a, frame, seed):
+    """plain hand: the line ends in a small curl, like a pen stroke (no fingers)."""
+    pts = [wrist]; ang = a; x, y = wrist
+    for k in range(4):
+        ang += 0.42; x += d(ang)[0] * 13; y += d(ang)[1] * 13; pts.append((x, y))
+    wline(c, pts, frame, amp=0.6, seed=seed)
+
 def limb(c, base, a1, a2, l1, l2, frame, seed):
     j = (base[0] + d(a1)[0] * l1, base[1] + d(a1)[1] * l1)
     e = (j[0] + d(a2)[0] * l2, j[1] + d(a2)[1] * l2)
@@ -126,3 +133,13 @@ def A_talk(u):
     P["tilt"] = 0.07 * math.sin(u * 3.3); P["bob"] = 4 * abs(math.sin(u * 3.3))
     return P
 
+
+def A_run(u):
+    """big-stride run with bent arms pumping (the pose in the trump reference drawing)."""
+    P = dict(REST); ph = u * 2 * math.pi * 2.6; s = math.sin(ph)
+    P.update(lL1=0.75 * s, lR1=-0.75 * s, feet=1.0)
+    P["lL2"] = P["lL1"] - 1.05 * max(0, math.sin(ph + 1.2))
+    P["lR2"] = P["lR1"] - 1.05 * max(0, math.sin(ph + 1.2 + math.pi))
+    P.update(aL1=-0.7 * s - 0.15, aL2=-0.7 * s + 1.35, aR1=0.7 * s + 0.15, aR2=0.7 * s + 1.35)
+    P["bob"] = -22 * abs(math.cos(ph)); P["lean"] = 0.16; P["tilt"] = 0.05 * math.sin(ph * 2)
+    return P

@@ -4,3 +4,4 @@ __pycache__/
 
 # news_shots raw screenshots
 episodes/*/news_shots/raw/
+episodes/*/rigtest/out/

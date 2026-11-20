@@ -12,6 +12,12 @@ from .scene import cam, vgrad, glow, label, stars, coded_head, suit_figure, main
 
 TAU = 2 * math.pi
 ROBF = _face.Face("assets/characters/rob")
+_FACES = {"rob": ROBF}
+from . import rig as _rig
+
+def face_of(who):
+    if who not in _FACES: _FACES[who] = _face.Face(f"assets/characters/{who}")
+    return _FACES[who]
 import numpy as _np
 
 def _dark_here(c, lx, ly):
@@ -166,8 +172,20 @@ def _held(c, outfit, P):
 
 ROB_POSE_FIX = {"guitar": dict(aL1=-0.2, aL2=0.9, aR1=0.4, aR2=-0.9)}
 
-def rob(c, x, ground, s, P, f, u=0.0, outfit=(), mask=False, facing=1, rot=0.0, enter=None, shadow=True, expr="smile", talk=0.0, seed=0.0):
-    """Main character. outfit: tux suit toga scarf explorer wig crown sweat eyebags swirl guitar drink bag"""
+def rob(c, x, ground, s, P, f, u=0.0, outfit=(), mask=False, facing=1, rot=0.0, enter=None, shadow=True, expr="smile", talk=0.0, seed=0.0, who="rob", name=None, name_t=1.0):
+    """Main character. who = folder in assets/characters (rob, trump, ...).
+    outfit: tux suit toga scarf explorer wig crown sweat eyebags swirl guitar drink bag"""
+    F = face_of(who)
+    ink0 = _rig.INK
+    if F.ink is not None: _rig.INK = F.ink
+    try:
+        _actor(c, x, ground, s, P, f, u, outfit, mask, facing, rot, enter, shadow, expr, talk, seed, F)
+    finally:
+        _rig.INK = ink0
+    if name:
+        label(c, name, x, ground - (HIP_H + 347 + 380) * s - 30, 26, name_t)
+
+def _actor(c, x, ground, s, P, f, u, outfit, mask, facing, rot, enter, shadow, expr, talk, seed, F):
     P = dict(P)
     for o in outfit:
         if o in ROB_POSE_FIX: P.update(ROB_POSE_FIX[o])
@@ -186,11 +204,14 @@ def rob(c, x, ground, s, P, f, u=0.0, outfit=(), mask=False, facing=1, rot=0.0, 
     _torso_outfit(c, outfit)
     for side, (k1, k2) in (("L", ("aL1", "aL2")), ("R", ("aR1", "aR2"))):
         w, a = limb(c, (0, SHOULDER_Y), P[k1], P[k2], UA, FA, f, seed=60 if side == "L" else 70)
-        hand(c, w, a, f, seed=80 if side == "L" else 90)
+        (_rig.hand_hook if F.hands == "hook" else hand)(c, w, a, f, seed=80 if side == "L" else 90)
     _held(c, outfit, P)
     c.save(); c.translate(0, NECK_Y + 4); c.rotate(P["tilt"])
     _head_back(c, outfit)
-    rob_head(c, expr, u, talk, mask, seed)
+    c.save(); c.scale(F.scale, F.scale); c.translate(-F.pivot[0], -F.pivot[1])
+    _face.draw(c, F, expr, u, talk, seed)
+    c.restore()
+    if mask: draw_mask(c)
     _head_front(c, outfit, u)
     c.restore(); c.restore()
 

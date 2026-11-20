@@ -19,6 +19,12 @@ class Face:
         self.spr = {k: cairo.ImageSurface.create_from_png(os.path.join(d, f"{k}.png")) for k in ("eyeL", "eyeR", "browL", "browR")}
         lip = self.meta["mouth"]["lip"]
         self.lip = tuple(v / 255 for v in lip)
+        mp = os.path.join(d, "mouth.png")      # optional: the drawn rest mouth, kept as-is when not talking
+        self.mouth_spr = cairo.ImageSurface.create_from_png(mp) if os.path.exists(mp) and "x" in self.meta["mouth"] else None
+        self.pivot = tuple(self.meta.get("pivot", (173, 343)))
+        self.scale = float(self.meta.get("scale", 1.0))
+        self.ink = tuple(v / 255 for v in self.meta["ink"]) if "ink" in self.meta else None
+        self.hands = self.meta.get("hands", "fork")
 
 # expression = eye openness, left brow (dy, angle), right brow (dy, angle), mouth (open, width, curve)
 # brow angle: positive on L / negative on R = inner ends DOWN (angry); opposite = inner ends UP (worried)
@@ -68,7 +74,7 @@ def draw(c, F, expr="smile", u=0.0, talk=0.0, seed=0.0, blink=True):
     for k in ("eyeL", "eyeR"):
         mm = m[k]
         if eye <= 0.25:
-            w = 26 if k == "eyeL" else 22
+            w = mm.get("w", 26 if k == "eyeL" else 22)
             c.new_path()
             if E.get("closed_happy"):
                 c.move_to(mm["cx"] - w, mm["cy"] + 4); c.curve_to(mm["cx"] - w / 2, mm["cy"] - 8, mm["cx"] + w / 2, mm["cy"] - 8, mm["cx"] + w, mm["cy"] + 4)
@@ -86,6 +92,9 @@ def draw(c, F, expr="smile", u=0.0, talk=0.0, seed=0.0, blink=True):
     if talk > 0:
         flap = 0.5 + 0.5 * math.sin(u * 17 + seed) * math.sin(u * 7.3 + 1)
         op = max(op, talk * (0.25 + 0.6 * abs(flap)))
+    if F.mouth_spr is not None and op < 0.06 and -0.45 < cv < 0.3:
+        c.set_source_surface(F.mouth_spr, m["mouth"]["x"], m["mouth"]["y"]); c.get_source().set_filter(cairo.FILTER_BEST); c.paint()
+        return
     mouth(c, m["mouth"]["cx"], m["mouth"]["cy"], m["mouth"]["w"] * 0.5 * wd, op, cv, F.lip)
 
 def mouth(c, cx, cy, hw, op, cv, lip):
