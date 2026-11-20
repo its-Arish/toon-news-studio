@@ -19,7 +19,8 @@ SETUP
    Read naah/vendor/historymap/README.md, naah/docs/sessions/2026-11-20-america-historymap-swap.md,
    naah/projects/america/tools/make_historymap_shots.py and record_historymap.mjs — they show the History Map
    project-file format and the recording method that already worked on this Mac.
-3. pip install playwright pillow numpy && python3 -m playwright install chromium ; check ffmpeg is installed.
+3. pip install -r requirements.txt playwright && python3 -m playwright install chromium ; check ffmpeg is installed.
+   (requirements.txt includes scipy, which the marker sound effects need.)
    Install the font: cp toon-news-studio/assets/fonts/PatrickHand.ttf ~/Library/Fonts/
 
 PART A — NEWS-ARTICLE CLIPS
@@ -73,6 +74,8 @@ FINISH
     Push to branch episode/oil-iran-january.
 13. Tell me: how many news clips and map clips are ready, which were skipped and why, and anything I need to do
     (sign in somewhere, approve a wording change).
+
+Do not edit toonkit/, assets/characters/ or the script — the character rig and script are handled separately.
 
 Rules: do not invent facts or change what a highlighted sentence says; real people only as name labels, no photos of
 faces; keep each news clip short (one sentence + outlet name) — no full paragraphs; ask me before deleting anything.

@@ -1,3 +1,5 @@
 pycairo
 numpy
 pillow
+scipy
+opencv-python
