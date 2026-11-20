@@ -11,6 +11,7 @@
   - `kit.py` — actors with outfits, side characters, crowds, ~50 props, ~30 backgrounds, auto-camera
   - `sfx.py` — synthesized sound effects and the full-length SFX track
 - `tools/split_face.py` — turns a drawn head into blank face + eye/brow sprites
+- `tools/news_shots.py` — opens news articles, highlights the quoted sentence, outputs house-style stills + 2.5 s push-in clips (run on a machine with internet; see an episode's `news_shots.json`)
 - `assets/` — character heads, fonts
 - `episodes/<yyyy-mm-slug>/` — one folder per story: `script.txt` + `film.py` (shot list)
 
@@ -36,3 +37,4 @@ Copy an episode folder, replace `SCRIPT` lines and write new `sh_*` shot functio
 | Episode | Status |
 |---|---|
 | 2026-11 The Entire History of Robert Pattinson, the seventh James Bond | full 12-min episode rendered (247 shots), timed to voiceover |
+| 2026-11 Are Oil Prices Finally Dropping? What Will Happen in January? USA Iran War | script v2 + news-shot and History Map lists; B-roll via `CLAUDE_CODE_PROMPT.md` |

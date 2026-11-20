@@ -1,0 +1,76 @@
+{
+  "_note": "Map shots for History Map (naah repo, vendor/historymap on branch america-historymap-tools). Coordinates are [lon, lat]. 'dur' is a placeholder at 2.6 words/s; retime from the voiceover .srt when it exists. Every map shot changes something every 2-3 s (camera move, region fade, arrow draw, pin pop). Style: satellite, labels off; our own labels in Patrick Hand. Positions marked 'illustrative' must not be presented as exact locations.",
+  "shots": [
+    {
+      "id": "map01-strikes",
+      "line": "on the 28th of February, the United States and Israel launched strikes on Iran",
+      "dur": 5.0,
+      "camera": [{"start_from_space": true}, {"to": [44.0, 31.0], "zoom": 4.2}],
+      "regions": [{"iso3": "IRN", "color": "#C8312B"}, {"iso3": "ISR", "color": "#2F6FD6"}],
+      "arrows": [{"from": [34.9, 31.6], "to": [51.39, 35.69], "color": "#ffffff", "label": "28 FEB", "when": "start"}],
+      "pins": [{"name": "TEHRAN", "ll": [51.39, 35.69]}]
+    },
+    {
+      "id": "map02-hormuz",
+      "line": "It shut the Strait of Hormuz, the narrow strip of water between Iran and Oman that carries close to a fifth of the world's oil",
+      "dur": 7.5,
+      "camera": [{"to": [56.4, 26.5], "zoom": 5.2}, {"to": [56.45, 26.55], "zoom": 7.2}],
+      "regions": [{"iso3": "IRN", "color": "#C8312B"}, {"iso3": "OMN", "color": "#F3B562"}],
+      "pins": [{"name": "STRAIT OF HORMUZ", "ll": [56.45, 26.55]}],
+      "labels": [{"text": "~1/5 OF THE WORLD'S OIL", "ll": [58.2, 25.2], "when": "w:fifth"}]
+    },
+    {
+      "id": "map03-blockade",
+      "line": "In July, the US Navy put its blockade of Iranian ports back in place, and Iran kept hitting ships",
+      "dur": 6.0,
+      "camera": [{"to": [54.5, 27.0], "zoom": 5.4}],
+      "regions": [{"iso3": "IRN", "color": "#C8312B"}],
+      "pins": [{"name": "BANDAR ABBAS", "ll": [56.27, 27.18]}, {"name": "KHARG ISLAND", "ll": [50.32, 29.24]}],
+      "labels": [{"text": "US BLOCKADE · 14 JULY", "ll": [55.0, 25.6]}]
+    },
+    {
+      "id": "map04-escape",
+      "line": "Tankers started slipping through the southern side of the strait ... pipelines that skip Hormuz completely",
+      "dur": 9.0,
+      "camera": [{"to": [56.6, 26.2], "zoom": 7.0}, {"to": [47.0, 24.5], "zoom": 4.4}],
+      "regions": [{"iso3": "SAU", "color": "#F3B562"}, {"iso3": "ARE", "color": "#F3B562"}],
+      "arrows": [
+        {"from": [55.6, 26.0], "to": [57.6, 25.4], "color": "#ffe14d", "label": "TRACKERS OFF", "when": "start"},
+        {"from": [49.67, 25.94], "to": [38.06, 24.09], "color": "#ffffff", "label": "EAST-WEST PIPELINE → YANBU", "when": "w:pipelines"},
+        {"from": [53.6, 23.8], "to": [56.33, 25.12], "color": "#ffffff", "label": "→ FUJAIRAH", "when": "w:pipelines+0.8"}
+      ],
+      "labels": [{"text": "PIPELINES SKIP HORMUZ", "ll": [45.0, 21.5], "when": "w:completely"}],
+      "_check": "Pipeline endpoints are the real terminals (Abqaiq→Yanbu, Habshan→Fujairah); draw them as straight arrows, not as exact pipeline routes."
+    },
+    {
+      "id": "map05-carriers",
+      "line": "A third American aircraft carrier just arrived in the region",
+      "dur": 4.5,
+      "camera": [{"to": [55.0, 20.0], "zoom": 3.6}],
+      "pins": [
+        {"name": "CARRIER 1", "ll": [61.5, 21.0], "style": "target"},
+        {"name": "CARRIER 2", "ll": [58.9, 23.9], "style": "target"},
+        {"name": "CARRIER 3", "ll": [63.5, 17.5], "style": "target"}
+      ],
+      "labels": [{"text": "3 US CARRIERS IN THE REGION", "ll": [56.0, 15.0]}],
+      "_check": "Carrier positions are illustrative (not reported). Keep the label generic; no ship names on pins."
+    },
+    {
+      "id": "map06-tankers-hit",
+      "line": "Ship traffic through Hormuz is still about sixty-five percent below normal. Tankers are still being hit.",
+      "dur": 5.0,
+      "camera": [{"to": [56.45, 26.4], "zoom": 6.6}],
+      "regions": [{"iso3": "IRN", "color": "#C8312B"}],
+      "pins": [{"name": "TANKER HIT · 20 NOV", "ll": [56.6, 26.3], "style": "target", "_check": "approximate: reported 'in the Strait of Hormuz'"}],
+      "labels": [{"text": "TRAFFIC −65%", "ll": [58.0, 25.0]}]
+    },
+    {
+      "id": "map07-three-roads",
+      "line": "So what happens to oil in January? It comes down to three roads.",
+      "dur": 4.0,
+      "camera": [{"to": [56.4, 26.5], "zoom": 5.0}, {"rise_to_globe": true}],
+      "regions": [{"iso3": "IRN", "color": "#C8312B"}, {"iso3": "USA", "color": "#2F6FD6"}],
+      "_note": "End on the globe so the cut to the cartoon 'three roads' fork feels like pulling back to the big picture."
+    }
+  ]
+}
