@@ -24,18 +24,25 @@ SETUP
 
 PART A — NEWS-ARTICLE CLIPS
 4. From toon-news-studio run:
-     python3 tools/news_shots.py episodes/2026-11-oil-iran-january/news_shots.json --dim
-   Output: episodes/2026-11-oil-iran-january/news_shots/<id>.png (still) and <id>.mp4 (2.5 s push-in), plus report.json.
+     python3 tools/news_shots.py episodes/2026-11-oil-iran-january/news_shots.json
+   Every clip plays in this order: the article appears whole (swoosh) and stays on screen ~1 s so the viewer sees
+   the real news page and headline -> the camera pushes in to the paragraph -> a marker-cap click, then the yellow
+   marker draws across the sentence line by line with a marker-stroke sound per line, the rest of the page dims ->
+   hold ~0.9 s. The highlight is animated after the screenshot, never baked into the page.
+   Output per shot in episodes/2026-11-oil-iran-january/news_shots/: <id>.mp4 (≈4 s, with sound),
+   <id>_sfx.wav (the sound alone, same length, for the separate SFX track), <id>.png (final frame), plus report.json.
+   All 26 news shots must end up as clips; none may be dropped without telling me why.
 5. For every shot not "ok" in report.json:
    - Open news_shots/raw/<id>.png and look at it.
    - Paywall / sign-in / bot check: rerun that shot with
-       python3 tools/news_shots.py <json> --only <id> --profile ~/.toon-news-chrome --headed --chrome --dim
+       python3 tools/news_shots.py <json> --only <id> --profile ~/.toon-news-chrome --headed --chrome
      If a sign-in page appears, stop and ask me to sign in in that window, then rerun.
    - Wording differs on the live page: copy the page's real sentence (same fact) into "highlight" in news_shots.json and rerun.
      Never highlight a sentence that says something different from the script line in "line".
    - Page gone or still blocked: mark it "skipped" with the reason in report.json and move on.
-6. Look at every final .png. Reject and redo any where: the highlight is on the wrong words, a pop-up or ad covers
-   the text, the page is blank/dark, or the outlet name is not visible somewhere on the page or in the chip.
+6. Check every clip: extract frames at 0.5 s and at the end (ffmpeg -ss) and look at them. Reject and redo any where
+   the first frame isn't a readable news page, the marker lands on the wrong words, a pop-up or ad covers the text,
+   or the page is blank/dark. To change only timing/look without reopening sites: python3 tools/news_shots.py <json> --reuse
 
 PART B — HISTORY MAP CLIPS
 7. Serve History Map: cd naah/vendor/historymap && python3 -m http.server 8743

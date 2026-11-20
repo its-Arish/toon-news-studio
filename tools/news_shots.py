@@ -1,26 +1,35 @@
 #!/usr/bin/env python3
-"""news_shots: highlighted news-article screenshots + zoom clips in the house style.
+"""news_shots: news-article clips where the page is shown first, then a marker draws over the line.
 
 For each shot in a JSON list it opens the article in a real browser, closes cookie /
-subscribe pop-ups, finds the exact sentence, paints a yellow marker over it, scrolls it
-into view, takes a 2x screenshot, and then makes:
+subscribe pop-ups, finds the exact sentence, scrolls it into view and takes a clean 2x
+screenshot (no highlight baked in). The highlight is animated afterwards:
 
-  out/<id>.png   1280x720 still (grain, vignette, outlet + date chip)
-  out/<id>.mp4   2.5 s clip that eases from the full page into the highlighted line
-  out/report.json  what was found / not found per shot
+  0.0 s   swoosh, the article appears (whole page in view, headline readable)
+  ~1.0 s  camera pushes in to the paragraph
+  ~1.7 s  marker cap click, then the yellow marker sweeps across the sentence line by line,
+          one marker-stroke sound per line; the rest of the page dims
+  end     hold on the highlighted line
+
+Outputs per shot (in <json folder>/news_shots/ unless --out):
+  <id>.mp4      1280x720 30 fps clip WITH its sound effects
+  <id>_sfx.wav  the same sound effects alone (full clip length) for the separate SFX track
+  <id>.png      final highlighted frame
+  report.json   ok / NOT FOUND / ERROR per shot; raw/<id>.png = the clean screenshot
 
 Usage (on your own machine; needs internet):
-  pip install playwright pillow numpy && python3 -m playwright install chromium
+  pip install playwright pillow numpy scipy && python3 -m playwright install chromium
   python3 tools/news_shots.py episodes/2026-11-oil-iran-january/news_shots.json
-  python3 tools/news_shots.py <json> --only cnbc-brent-90 axios-massie-218
-  python3 tools/news_shots.py <json> --profile ~/.toon-news-chrome --headed   # sign in once for paywalled sites
-  python3 tools/news_shots.py <json> --dim        # also darken everything except the highlighted line
+  python3 tools/news_shots.py <json> --only 12-cnbc-brent-90
+  python3 tools/news_shots.py <json> --profile ~/.toon-news-chrome --headed --chrome   # paywalls / bot checks
+  python3 tools/news_shots.py <json> --no-dim                                           # keep the page bright
+  python3 tools/news_shots.py <json> --reuse     # re-animate from saved screenshots, no browser
 
-Shot fields: id, url, highlight (exact words on the page, any case/spacing),
-outlet ("CNBC"), date ("10 NOV 2026"), optional: dur (s, default 2.5), fallback
-(a shorter phrase to try if the full one is not found), scroll_extra (px).
+Shot fields: id, url, highlight (exact words on the page; case, quotes and spacing are ignored),
+outlet, date, optional: dur (s, default 4.0), fallback (shorter phrase), scroll_extra (px),
+show (s the article is on screen before the push-in, default 1.0).
 """
-import argparse, json, math, os, subprocess, sys, tempfile
+import argparse, json, os, subprocess, sys, wave
 from pathlib import Path
 
 import numpy as np
@@ -28,15 +37,15 @@ from PIL import Image, ImageDraw, ImageFont
 
 W, H, FPS = 1280, 720, 30
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 FONT = ROOT / "assets/fonts/PatrickHand.ttf"
-HL = "#ffe14d"   # marker yellow
+MARKER = np.array([255, 225, 77], np.float32) / 255.0   # marker yellow, applied as multiply
 
 CONSENT_WORDS = ["accept all", "accept", "i accept", "agree", "i agree", "allow all", "got it", "ok",
                  "continue", "no thanks", "not now", "maybe later", "close", "dismiss", "reject all"]
 
 JS_CLEAN = r"""
 () => {
-  // hide fixed/sticky overlays that cover the page (cookie walls, sign-up modals, sticky ads)
   const vw = innerWidth, vh = innerHeight;
   for (const el of document.querySelectorAll('body *')) {
     const cs = getComputedStyle(el);
@@ -53,8 +62,9 @@ JS_CLEAN = r"""
 }
 """
 
-JS_HIGHLIGHT = r"""
-([want, color, dim, extra]) => {
+# finds the phrase, scrolls it to ~42% of the viewport, returns one rect per visual line (CSS px)
+JS_FIND = r"""
+([want, extra]) => {
   const norm = s => s.toLowerCase().replace(/[‘’‛]/g, "'").replace(/[“”]/g, '"')
                     .replace(/[–—]/g, '-').replace(/ /g, ' ');
   const target = norm(want).replace(/\s+/g, ' ').trim();
@@ -64,7 +74,6 @@ JS_HIGHLIGHT = r"""
       const cs = getComputedStyle(p);
       if (cs.display === 'none' || cs.visibility === 'hidden' || /SCRIPT|STYLE|NOSCRIPT/.test(p.tagName)) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT; } });
-  // build one string of all visible text with whitespace collapsed, keeping a map back to (node, offset)
   let flat = '', map = [], lastSpace = true, n;
   while ((n = walker.nextNode())) {
     const t = norm(n.data);
@@ -82,26 +91,17 @@ JS_HIGHLIGHT = r"""
   range.setStart(sn, so); range.setEnd(en, Math.min(eo + 1, en.data.length));
   const r0 = range.getBoundingClientRect();
   window.scrollBy(0, r0.top - innerHeight * 0.42 + (extra || 0));
-  const rects = [...range.getClientRects()].filter(r => r.width > 2 && r.height > 2);
-  const layer = document.createElement('div');
-  layer.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2147483647;mix-blend-mode:multiply';
-  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-  for (const r of rects) {
-    const m = document.createElement('div');
-    m.style.cssText = `position:absolute;left:${r.left - 3}px;top:${r.top + r.height * 0.12}px;width:${r.width + 6}px;` +
-      `height:${r.height * 0.86}px;background:${color};border-radius:4px;transform:rotate(-0.4deg)`;
-    layer.appendChild(m);
-    x0 = Math.min(x0, r.left); y0 = Math.min(y0, r.top); x1 = Math.max(x1, r.right); y1 = Math.max(y1, r.bottom);
+  const rects = [...range.getClientRects()].filter(r => r.width > 2 && r.height > 4)
+                 .map(r => ({x0: r.left, y0: r.top, x1: r.right, y1: r.bottom}));
+  rects.sort((a, b) => a.y0 - b.y0 || a.x0 - b.x0);
+  const lines = [];
+  for (const r of rects) {               // merge rects that sit on the same visual line
+    const L = lines.find(l => Math.abs((l.y0 + l.y1) / 2 - (r.y0 + r.y1) / 2) < Math.min(l.y1 - l.y0, r.y1 - r.y0) * 0.5);
+    if (L) { L.x0 = Math.min(L.x0, r.x0); L.x1 = Math.max(L.x1, r.x1); L.y0 = Math.min(L.y0, r.y0); L.y1 = Math.max(L.y1, r.y1); }
+    else lines.push({...r});
   }
-  if (dim) {
-    const pad = 18, box = [x0 - pad, y0 - pad, x1 + pad, y1 + pad];
-    const sh = (l, t, w, h) => { const d = document.createElement('div');
-      d.style.cssText = `position:absolute;left:${l}px;top:${t}px;width:${w}px;height:${h}px;background:rgba(0,0,0,.45)`; layer.appendChild(d); };
-    sh(0, 0, innerWidth, box[1]); sh(0, box[3], innerWidth, innerHeight - box[3]);
-    sh(0, box[1], box[0], box[3] - box[1]); sh(box[2], box[1], innerWidth - box[2], box[3] - box[1]);
-  }
-  document.body.appendChild(layer);
-  return { x0, y0, x1, y1, vw: innerWidth, vh: innerHeight };
+  lines.sort((a, b) => a.y0 - b.y0);
+  return { lines, vw: innerWidth, vh: innerHeight };
 }
 """
 
@@ -127,7 +127,6 @@ def font(size):
 
 
 def chip_layer(outlet, date):
-    """Transparent 1280x720 overlay: dark rounded source chip, bottom-left (house caption look)."""
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     txt = f"SOURCE: {outlet}" + (f"  ·  {date}" if date else "")
@@ -139,53 +138,119 @@ def chip_layer(outlet, date):
     return im
 
 
-def grade(rgb, seed):
-    """grain + vignette, same values as toonkit.core."""
-    a = rgb.astype(np.float32)
-    yy, xx = np.mgrid[0:H, 0:W]
-    dd = np.sqrt(((xx - W / 2) / (W / 2)) ** 2 + ((yy - H / 2) / (H / 2)) ** 2)
-    vig = (1 - 0.38 * np.clip(dd - 0.35, 0, 1) ** 1.6)[..., None]
-    g = np.random.default_rng(seed).normal(0, 7, (H, W, 1))
-    return np.clip(a * vig + g, 0, 255).astype(np.uint8)
+_yy, _xx = np.mgrid[0:H, 0:W]
+_dd = np.sqrt(((_xx - W / 2) / (W / 2)) ** 2 + ((_yy - H / 2) / (H / 2)) ** 2)
+VIG = (1 - 0.38 * np.clip(_dd - 0.35, 0, 1) ** 1.6)[..., None].astype(np.float32)
+GRAIN = [np.random.default_rng(s).normal(0, 7, (H, W, 1)).astype(np.float32) for s in range(6)]
 
 
-def make_outputs(raw_png, box, shot, out_dir):
-    """raw_png: 2x viewport screenshot (2560x1440). box: highlight rect in CSS px."""
-    src = Image.open(raw_png).convert("RGB")
-    sw, sh = src.size
-    sc = sw / box["vw"]                      # CSS px → screenshot px
-    bx0, by0, bx1, by1 = (box["x0"] * sc, box["y0"] * sc, box["x1"] * sc, box["y1"] * sc)
-    # end framing: the highlighted line fills ~78% of the width, kept 16:9 and inside the page
+def grade(rgb, k):
+    return np.clip(rgb.astype(np.float32) * VIG + GRAIN[k % 6], 0, 255).astype(np.uint8)
+
+
+def ease(t):
+    t = min(1.0, max(0.0, t)); return t * t * (3 - 2 * t)
+
+
+def write_wav(path, x, sr):
+    x = np.clip(x, -1, 1)
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr)
+        w.writeframes((x * 32767).astype(np.int16).tobytes())
+
+
+def make_outputs(raw_png, geo, shot, out_dir, dim=True):
+    from toonkit import sfx
+    src = np.asarray(Image.open(raw_png).convert("RGB")).astype(np.float32)
+    sh, sw = src.shape[:2]
+    sc = sw / geo["vw"]
+    lines = [[l["x0"] * sc, l["y0"] * sc, l["x1"] * sc, l["y1"] * sc] for l in geo["lines"]]
+    bx0 = min(l[0] for l in lines); by0 = min(l[1] for l in lines)
+    bx1 = max(l[2] for l in lines); by1 = max(l[3] for l in lines)
+
+    # end framing: the sentence fills ~78% of the width, 16:9, inside the page
     bw = max(bx1 - bx0, sw * 0.35)
     ew = min(sw, bw / 0.78); eh = ew * 9 / 16
     cx, cy = (bx0 + bx1) / 2, (by0 + by1) / 2
     ex0 = min(max(cx - ew / 2, 0), sw - ew); ey0 = min(max(cy - eh / 2, 0), sh - eh)
+
+    # timeline (s)
+    dur = float(shot.get("dur", 4.0)); show = float(shot.get("show", 1.0))
+    push0, push1 = show, show + 0.7
+    mark0 = push1 + 0.12
+    widths = [l[2] - l[0] for l in lines]
+    per_px = 0.85 / max(sum(widths), 1)                       # whole sentence ≈ 0.85 s of marker
+    line_t = [max(0.22, w * per_px) for w in widths]
+    gap = 0.07
+    starts = []; t = mark0
+    for lt in line_t:
+        starts.append(t); t += lt + gap
+    mark1 = t
+    dur = max(dur, mark1 + 0.9)                               # always hold ~0.9 s on the finished highlight
+    n = int(round(dur * FPS))
+
+    hl = src * MARKER
+    box = np.zeros((sh, sw), np.float32)
+    pad = 18 * sc / 2
+    box[int(max(0, by0 - pad)):int(min(sh, by1 + pad)), int(max(0, bx0 - pad)):int(min(sw, bx1 + pad))] = 1
+
+    def frame(tsec):
+        img = src
+        prog = [ease((tsec - s0) / lt) for s0, lt in zip(starts, line_t)]
+        if any(p > 0 for p in prog):
+            m = np.zeros((sh, sw), np.float32)
+            for (x0, y0, x1, y1), p in zip(lines, prog):
+                if p <= 0: continue
+                hgt = y1 - y0
+                ya, yb = int(y0 + hgt * 0.12), int(y0 + hgt * 0.98)
+                xa = int(x0 - 3 * sc / 2); xb = int(x0 + (x1 - x0 + 6 * sc / 2) * p)
+                if xb > xa:
+                    m[ya:yb, xa:xb] = 1
+                    feather = int(6 * sc / 2)                     # soft wet edge at the moving tip
+                    if p < 1 and feather > 0:
+                        fa = max(xa, xb - feather)
+                        m[ya:yb, fa:xb] *= np.linspace(1, 0.35, xb - fa)[None, :]
+            img = img * (1 - m[..., None]) + hl * m[..., None]
+        if dim:
+            a = 0.45 * ease((tsec - mark0 + 0.1) / 0.35)
+            if a > 0:
+                img = img * (1 - a * (1 - box[..., None]))
+        k = ease((tsec - push0) / (push1 - push0))
+        x0 = ex0 * k; y0 = ey0 * k
+        w = sw + (ew - sw) * k; h = sh + (eh - sh) * k
+        return Image.fromarray(np.clip(img, 0, 255).astype(np.uint8)).resize((W, H), Image.LANCZOS, box=(x0, y0, x0 + w, y0 + h))
+
     chip = chip_layer(shot["outlet"], shot.get("date", ""))
     sid = shot["id"]
 
-    def frame_at(t):
-        k = t * t * (3 - 2 * t)              # ease in-out
-        x0 = ex0 * k; y0 = ey0 * k
-        w = sw + (ew - sw) * k; h = sh + (eh - sh) * k
-        fr = src.resize((W, H), Image.LANCZOS, box=(x0, y0, x0 + w, y0 + h))
-        return fr
+    # sound: swoosh as the article lands, cap click, one marker stroke per line
+    SR = sfx.SR
+    mix = np.zeros(int(dur * SR) + SR, np.float64)
+    sfx._place(mix, sfx.swoosh(1), 0.0)
+    sfx._place(mix, sfx.marker_cap(2), mark0 - 0.1)
+    for i, (s0, lt) in enumerate(zip(starts, line_t)):
+        sfx._place(mix, sfx.marker(i + 3, lt + 0.05), s0)
+    mix = mix[: int(dur * SR)]
+    wav = out_dir / f"{sid}_sfx.wav"
+    write_wav(wav, mix, SR)
 
-    still = Image.fromarray(grade(np.asarray(frame_at(1.0)), 1)).convert("RGBA")
-    still.alpha_composite(chip)
-    still.convert("RGB").save(out_dir / f"{sid}.png")
-
-    dur = float(shot.get("dur", 2.5)); n = int(round(dur * FPS))
-    hold = int(0.35 * FPS)                   # hold on the full page first, then push in
+    tmp = out_dir / f"{sid}.video.mp4"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
            "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
-           "-pix_fmt", "yuv420p", str(out_dir / f"{sid}.mp4")]
+           "-pix_fmt", "yuv420p", str(tmp)]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
+    last = None
     for i in range(n):
-        t = 0 if i < hold else min(1, (i - hold) / max(1, n - hold - int(0.3 * FPS)))
-        fr = Image.fromarray(grade(np.asarray(frame_at(t)), i // 2 % 6)).convert("RGBA")
+        fr = Image.fromarray(grade(np.asarray(frame(i / FPS)), i // 2)).convert("RGBA")
         fr.alpha_composite(chip)
-        p.stdin.write(fr.convert("RGB").tobytes())
+        last = fr.convert("RGB")
+        p.stdin.write(last.tobytes())
     p.stdin.close(); p.wait()
+    last.save(out_dir / f"{sid}.png")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(tmp), "-i", str(wav), "-c:v", "copy",
+                    "-c:a", "aac", "-b:a", "192k", "-shortest", str(out_dir / f"{sid}.mp4")], check=True)
+    tmp.unlink()
+    return dur
 
 
 def main():
@@ -196,10 +261,9 @@ def main():
     ap.add_argument("--profile", help="persistent browser profile dir (sign in once, reuse cookies)")
     ap.add_argument("--headed", action="store_true", help="show the browser (helps with bot checks)")
     ap.add_argument("--chrome", action="store_true", help="use installed Google Chrome instead of Playwright Chromium")
-    ap.add_argument("--dim", action="store_true", help="darken everything except the highlighted line")
+    ap.add_argument("--no-dim", action="store_true", help="keep the rest of the page bright")
+    ap.add_argument("--reuse", action="store_true", help="skip the browser; re-animate from raw/<id>.png + raw/<id>.json")
     a = ap.parse_args()
-
-    from playwright.sync_api import sync_playwright
 
     jpath = Path(a.shots)
     shots = json.loads(jpath.read_text())["shots"]
@@ -208,8 +272,22 @@ def main():
     out = Path(a.out) if a.out else jpath.parent / "news_shots"
     out.mkdir(parents=True, exist_ok=True)
     rawdir = out / "raw"; rawdir.mkdir(exist_ok=True)
-    report = {}
+    rpath = out / "report.json"
+    report = json.loads(rpath.read_text()) if rpath.exists() else {}
 
+    def finish(s, geo, used):
+        d = make_outputs(rawdir / f"{s['id']}.png", geo, s, out, dim=not a.no_dim)
+        report[s["id"]] = {"status": "ok", "highlighted": used, "seconds": round(d, 2), "lines": len(geo["lines"])}
+        print(f"   ok  ({len(geo['lines'])} line(s), {d:.1f} s)")
+
+    if a.reuse:
+        for s in shots:
+            gp = rawdir / f"{s['id']}.json"
+            if gp.exists():
+                print(f"[{s['id']}] re-animate"); g = json.loads(gp.read_text()); finish(s, g, g.get("used"))
+        rpath.write_text(json.dumps(report, indent=2)); return
+
+    from playwright.sync_api import sync_playwright
     with sync_playwright() as pw:
         kw = dict(viewport={"width": 1280, "height": 720}, device_scale_factor=2, locale="en-US",
                   user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -231,28 +309,28 @@ def main():
                 dismiss_popups(page)
                 page.evaluate(JS_CLEAN)
                 page.wait_for_timeout(400)
-                box = None
+                geo, used = None, None
                 for phrase in [s["highlight"], s.get("fallback")]:
                     if phrase:
-                        box = page.evaluate(JS_HIGHLIGHT, [phrase, HL, a.dim, s.get("scroll_extra", 0)])
-                        if box:
+                        geo = page.evaluate(JS_FIND, [phrase, s.get("scroll_extra", 0)])
+                        if geo and geo["lines"]:
                             used = phrase; break
-                page.wait_for_timeout(700)       # let lazy images settle after the scroll
-                raw = rawdir / f"{sid}.png"
-                page.screenshot(path=str(raw))
-                if not box:
-                    report[sid] = {"status": "NOT FOUND", "note": "screenshot saved without highlight; check raw/ and fix the phrase"}
+                        geo = None
+                page.wait_for_timeout(800)            # lazy images settle after the scroll
+                page.screenshot(path=str(rawdir / f"{sid}.png"))
+                if not geo:
+                    report[sid] = {"status": "NOT FOUND", "note": "clean screenshot in raw/; fix 'highlight' to the page's real words"}
                     print("   ! phrase not found (paywall? different wording?)")
                     continue
-                make_outputs(raw, box, s, out)
-                report[sid] = {"status": "ok", "highlighted": used}
-                print("   ok")
+                geo["used"] = used
+                (rawdir / f"{sid}.json").write_text(json.dumps(geo))
+                finish(s, geo, used)
             except Exception as e:
                 report[sid] = {"status": "ERROR", "note": str(e)[:300]}
                 print("   ! error:", e)
         ctx.close()
 
-    (out / "report.json").write_text(json.dumps(report, indent=2))
+    rpath.write_text(json.dumps(report, indent=2))
     bad = [k for k, v in report.items() if v["status"] != "ok"]
     print(f"\n{len(report) - len(bad)}/{len(report)} ok → {out}")
     if bad:

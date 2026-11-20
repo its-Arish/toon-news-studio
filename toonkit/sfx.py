@@ -206,6 +206,15 @@ def pour(seed=0):
     d = .8; t = _t(d); return _norm(_bp(_noise(d), 300, 1500) * (0.6 + .4 * np.sin(2 * np.pi * 11 * t)) * _env(len(t), .05, .2), .12)
 def slide(seed=0): return swoosh(seed)
 def nervous(seed=0): return ping(seed) * .6
+def marker(seed=0, d=0.45):
+    """felt-tip highlighter stroke: dry fibre scratch + a faint squeak, length = the stroke."""
+    r = random.Random(seed); d = max(.15, d); t = _t(d); n = _noise(d)
+    grit = _bp(n, 1800, 6500) * (0.55 + .45 * np.abs(np.sin(2 * np.pi * r.uniform(55, 80) * t)))
+    body = _bp(n, 500, 1600) * .35
+    sq = _sine(np.linspace(r.uniform(1900, 2200), r.uniform(2300, 2600), len(t)), d) * .05
+    return _norm((grit + body + sq) * _env(len(t), .02, .07), .16)
+def marker_cap(seed=0):
+    d = .06; return _norm(_bp(_noise(d), 1500, 5000) * _dec(d, 80) + _sine(900, d) * _dec(d, 60) * .4, .18)
 def silence(seed=0): return np.zeros(1)
 
 BANK = {k: v for k, v in globals().items() if callable(v) and not k.startswith("_")}
