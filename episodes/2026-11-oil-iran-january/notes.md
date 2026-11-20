@@ -1,51 +1,70 @@
 # ARE OIL PRICES FINALLY DROPPING? WHAT WILL HAPPEN IN JANUARY? USA IRAN WAR
 
-Script: `script.txt` (plain text, no tags — paste straight into TTS). ~1,380 words ≈ 9 min at 2.6 words/s.
-Facts checked against news up to 20 Nov 2026 (US time). Re-check prices the day the voiceover is recorded.
+Script: `script.txt` (plain text, no tags — paste straight into TTS). ~1,620 words ≈ 10 min at 2.6 words/s.
+v2: rebuilt around the politics (Epstein files, midterm loss, Democrats taking Congress in January); oil price is the thread that ties them together.
+Facts checked against news up to 20 Nov 2026 (US time). Re-check prices and Congress numbers the day the voiceover is recorded.
 
 ## Timeline bar (top of screen, no chapter cards)
-THE DROP → THE WAR → THE ESCAPE → THE TRAP → JANUARY → YOUR WALLET
+THE DROP → THE FILES → THE WAR → THE VOTE → THE ESCAPE → JANUARY → YOUR WALLET
 
 ## Hook / rehook map
-| Beat | Opens with | Loop it opens | Paid off in |
+| Beat | Line | Loop opened | Paid off |
 |---|---|---|---|
-| Hook | Gas station sign: $3.07 → $4.50+ → under $4 | "So it's over, right? Not quite." + promise of 3 things | Payoff |
-| Rehook 1 | "how high it was thrown" — Feb 28, Hormuz shut | Why did it come back down? | The escape |
-| Rehook 2 | "If the strait is still dangerous… why is oil falling?" | | Dark transits, pipelines, demand drop, surplus |
-| Rehook 3 | "the price is ignoring three things" | | Water, military, no deal |
-| Rehook 4 | "And that brings us to January" | | Nov 29 / Dec 11 / Jan 3 calendar |
-| Payoff | $78 vs $95 vs $100 forecast gap → 3 scenarios | | |
-| Overdeliver | Diesel stays ~$5 + record Thanksgiving pump price + "watch these 3 dates" | | |
+| Hook | Gas sign $3.07 → $4.50+ → under $4. "So the war must be ending, right? Not even close." | 3 promises: why oil is falling / why next 6 weeks are dangerous / what the gas sign has to do with Epstein | Through to the end |
+| Rehook 1 | "Let's go back to the start of this year" — 30 Jan files → 28 Feb war | Distraction claim (both sides shown) | Files ↔ war ↔ price link |
+| Rehook 2 | "here is where the politics and the price became the same story" | Gas pain → voters | Midterms |
+| Rehook 3 | "Then came the 3rd of November." (hard cut, title-card beat) | | Blue wave + war poll |
+| Rehook 4 | "So is that why oil is falling? Partly. But the bigger reason is something most people missed." | | Dark transits, pipelines, surplus |
+| Rehook 5 | "And the war has not ended." / "At the very same moment, the Epstein files came roaring back." | Two problems, both arrive in January | January section |
+| Payoff | Subpoenas, war powers, purse strings, veto limit; escalation window before 3 Jan | | |
+| Overdeliver | 3 roads for oil + $22 bank gap + diesel stays ~$5 + record Thanksgiving + the 3 dates to watch | | |
+
+## Balance notes (keep in the edit)
+- Distraction theory is shown as critics' claim (Massie R, AOC D, a left-leaning poll) with the White House's rebuttal right after it.
+- Being named in the Epstein files ≠ wrongdoing; DOJ called some claims about Trump untrue — both stated.
+- Greene's claim is labelled as her claim, not proven.
+- Democrats' limits stated (veto, no override majority).
 
 ## Visual beats (for the shot list)
 - Gas-station price sign flipping: 3.07 → 4.56 → 3.81
-- Oil-barrel price gauge ($70 → $119 → $126 → $136 → ~$90)
-- Map: Strait of Hormuz between Iran and Oman; ship counter 85/day → near 0
-- Tankers with trackers "OFF" sneaking along southern lane, escort silhouettes; pipeline arrows bypassing strait
-- Supply vs demand seesaw tipping to SURPLUS
-- Three carriers popping in; tanker on fire (grayscale beat)
-- Seven-conditions scroll; two figures with arms crossed ("who blinks first")
-- Calendar with circles: NOV 29 / DEC 11 / JAN 3
-- Three forecast signs: $78 / $95 / $100 → "$22 GAP"
-- Three road forks: REOPEN ($70s) / FROZEN (stays) / STRIKES ($150)
-- Diesel truck carrying groceries, $5 tag
-- Real people as generic coded figures with name labels (THE PRESIDENT, IRAN'S NEGOTIATOR); no logos
+- Giant stack of paper "3,000,000 PAGES" dropping on a desk; date tag 30 JAN; then cut to 28 FEB, jets silhouette
+- Phone screen with "OPERATION EPSTEIN FURY" trending; a stamp "WHITE HOUSE: RIDICULOUS"
+- Map: Strait of Hormuz; ship counter → near 0; oil gauge $70 → $126
+- Gas pump ticking up while a calendar flips; "63% BLAME THE PRESIDENT" label
+- Election night: map of the US washing blue, Capitol dome turning blue, "SENATE 56 · HOUSE 257"
+- Tankers with trackers OFF sneaking along southern lane; pipeline arrows bypassing strait; supply/demand seesaw → SURPLUS
+- Three carriers popping in; tanker on fire (grayscale beat); Senate scoreboard 48–51
+- Petition sheet filling to 218 signatures
+- Two storm clouds labelled WAR and FILES drifting toward a calendar page "JAN 3"
+- Subpoena envelopes flying; a money valve labelled FUNDING being turned; VETO stamp
+- Calendar circles: NOV 29 / DEC 11 / JAN 3
+- Three road forks: DEAL ($70s) / FROZEN (stays) / STRIKES ($150); bank signs $78 vs $100 → "$22 GAP"
+- Diesel truck carrying groceries, $5 tag; Thanksgiving turkey next to a pump "RECORD"
+- Real people as generic coded figures with name labels (THE PRESIDENT, MASSIE, GREENE, etc.); no likenesses, no logos
 
 ## Fact sheet
-- War began 28 Feb 2026 (US–Israeli strikes); pre-war oil ≈ $70.
-- Hormuz: ~1/5 of world oil; pre-crisis ≈ 85 transits/day (IMF PortWatch). IEA: "largest supply disruption in history".
-- Brent $119.50 on 9 Mar; $126.41 on 30 Apr (4-yr high).
-- US gas $2.98 (26 Feb) → $3.98 (26 Mar); $4.56 Memorial Day; under $4 on 12 Nov for first time since July; $3.81 on 16 Nov; year earlier $3.07. Thanksgiving on track for record (prev. $3.58 in 2022) — AAA via AP.
-- June memorandum paused fighting; collapsed over Hormuz; US blockade reimposed 14 Jul. October = deadliest month for ship attacks.
-- Dated (physical) Brent peaked ~$136 early Oct, ~$93 by 13 Nov (IEA OMR).
-- Gulf crude exports >80% of pre-war in Oct (IEA); incl. bypass routes 16.7 vs 17 mb/d (Kpler). US-facilitated dark transits through southern corridor.
-- IEA 13 Nov: supply exceeds demand for first time since war; Q4 surplus; 2026 demand −2.7 mb/d.
-- Midterms 3 Nov: Republicans lost badly. ~9–10 Nov Trump: war "militarily … effectively over", strikes not needed; Brent < $90 on 10 Nov first time since August.
-- This week: Brent ~$90–92, WTI ~$81–84; third straight weekly decline (CNBC, 20 Nov).
-- Hormuz traffic ~65% below pre-war; TARA GAS hit 16 & 17 Nov, abandoned (gCaptain); IMO 138 incidents.
-- Birol: no credible pathway back to Feb 2026. Ghalibaf: strait never back to toll-free status.
-- USS Roosevelt = 3rd carrier; 3 groups expected through December. CBS: US/Israel considering new assault. Iran ~440 kg HEU.
-- Iran: blockade lift + six other conditions. Trump: wants "real deal"; "not rushing"; "We'll see what happens after the new year starts" (Channel 12, 19 Nov).
-- OPEC+ full ministerial 29 Nov sets 2027 quotas. 11 Dec gov't funding deadline (Bloomberg). New Congress sworn in 3 Jan.
-- Q1 2027 Brent forecasts: BNP $78, EIA $94.90, Morgan Stanley $100. $150 escalation warnings (CNBC/PVM).
-- EIA Nov STEO: 2027 diesel avg $5.03/gal, 12% above last month's forecast.
+Politics
+- 30 Jan 2026: DOJ released 3M+ pages of Epstein files; many mentions of Trump; being mentioned ≠ wrongdoing (NPR); DOJ said some claims vs Trump "untrue and sensationalist".
+- 28 Feb: US–Israeli strikes on Iran, without congressional authorization; began hours after Bill Clinton testified to House Oversight on Epstein.
+- Massie (R): bombing Iran "won't make the Epstein files go away"; AOC similar. Data for Progress/Drop Site/Zeteo poll (11 Mar): 52–40 saw war as at least partly a distraction. White House: "ridiculous take… true morons".
+- Bondi ousted in April amid criticism over files handling (NPR). Lutnick first sitting cabinet member questioned by House Oversight on Epstein (6 May).
+- PBS/NPR/Marist: 63% blame Trump for high gas prices.
+- 3 Nov midterms: Dems won House (~257) and Senate (56 seats, 9 flips — most in ~70 yrs); "biggest blue wave since Watergate" (Yahoo).
+- Reuters/Ipsos (Nov): 71% want Congress to pass law ending the war (51% of Republicans).
+- Senate rejected House-passed war powers resolution 48–51 (CBS, Nov).
+- 11 Nov: Massie discharge petition for Epstein Files Transparency Act II hit 218 signatures.
+- 19 Nov: Marjorie Taylor Greene claimed Trump personally blocked the files (her claim).
+- New Congress sworn in 3 Jan 2027. Planned probes: Iran war decision, Epstein files, Trump business interests (NPR, ABC). Meeks: war powers resolution in January + cut funding (CBS). Funding riders possible in must-pass bills; Trump keeps veto.
+- One analyst (Al Jazeera): serious US escalation, if any, likely before Democrats take Congress in January.
+- Trump to Channel 12 (19 Nov): "not rushing"; "We'll see what happens after the new year starts."
+- 11 Dec government funding deadline; Democrats weighing it as leverage (Bloomberg).
+
+Oil
+- Pre-war ≈ $70; Brent $126.41 on 30 Apr (4-yr high). US gas $2.98 → $3.98 (Feb 26 → Mar 26).
+- June memorandum collapsed; blockade reimposed 14 Jul; October deadliest month for ship attacks.
+- ~9–10 Nov: Trump said war "militarily … effectively over"; Brent < $90 on 10 Nov (first since August); gas < $4 on 12 Nov (first since July).
+- Gulf crude exports >80% of pre-war in Oct (IEA); dark, US-facilitated transits; bypass pipelines. IEA 13 Nov: supply > demand first time since war.
+- Hormuz traffic ~65% below pre-war (gCaptain). USS Roosevelt = 3rd carrier. CBS: US/Israel considering new assault. Iran: seven conditions.
+- OPEC+ full ministerial 29 Nov sets 2027 quotas.
+- Q1 2027 Brent: BNP $78, EIA $94.90, Morgan Stanley $100. $150 escalation warnings.
+- EIA: 2027 diesel avg $5.03/gal. AAA: Thanksgiving on track for record pump price (prev. $3.58, 2022); $3.81 on 16 Nov vs $3.07 a year earlier.
