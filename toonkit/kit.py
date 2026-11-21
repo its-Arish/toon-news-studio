@@ -183,7 +183,7 @@ def rob(c, x, ground, s, P, f, u=0.0, outfit=(), mask=False, facing=1, rot=0.0, 
     finally:
         _rig.INK = ink0
     if name:
-        label(c, name, x, ground - (HIP_H + 347 + 380) * s - 30, 26, name_t)
+        label(c, name, x, ground - (HIP_H + 347 + 380 * F.scale) * s - 30, 26, name_t)
 
 def _actor(c, x, ground, s, P, f, u, outfit, mask, facing, rot, enter, shadow, expr, talk, seed, F):
     P = dict(P)
