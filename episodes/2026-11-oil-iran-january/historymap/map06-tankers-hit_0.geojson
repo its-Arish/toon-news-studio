@@ -1,0 +1,56 @@
+{
+ "type": "FeatureCollection",
+ "name": "Oil/Iran map06-tankers-hit_0",
+ "historymap": {
+  "version": 1,
+  "settings": {
+   "style": "satellite",
+   "aspect": "16:9",
+   "accent": "#C8312B",
+   "globe": false,
+   "pitch": false,
+   "labels": false,
+   "pace": 1,
+   "title": "",
+   "subtitle": "",
+   "watermark": "",
+   "format": "mp4",
+   "quality": 2,
+   "fillOpacity": 0.5,
+   "borders": true,
+   "fromSpace": false,
+   "zoomHop": false
+  },
+  "regions": [
+   {
+    "id": "IRN",
+    "kind": "country",
+    "name": "Iran",
+    "color": "#C8312B"
+   }
+  ],
+  "arrows": [],
+  "shot": {
+   "durMs": 2033.333,
+   "from": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 24.2515
+   },
+   "to": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 32.0
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 915
+  }
+ },
+ "features": []
+}

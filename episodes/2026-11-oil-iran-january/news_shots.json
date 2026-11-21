@@ -3,7 +3,7 @@
   "shots": [
     {"id": "01-npr-epstein-3m", "line": "the Justice Department released more than three million pages of the Epstein files",
      "url": "https://www.npr.org/2026/01/30/nx-s1-5693904/epstein-files-doj-trump",
-     "highlight": "released more than 3 million pages, more than 2,000 videos and 180,000 images", "fallback": "more than 3 million pages",
+     "highlight": "released more than 3 million pages, including more than 2,000 videos and 180,000 images", "fallback": "released more than 3 million pages",
      "outlet": "NPR", "date": "30 JAN 2026"},
     {"id": "02-npr-not-wrongdoing", "line": "Being named in those files is not proof of a crime",
      "url": "https://www.npr.org/2026/01/30/nx-s1-5693904/epstein-files-doj-trump",
@@ -79,7 +79,7 @@
      "outlet": "YAHOO NEWS", "date": "19 NOV 2026"},
     {"id": "20-npr-subpoena", "line": "Subpoenas. They can force people to testify and hand over documents",
      "url": "https://www.npr.org/2026/11/04/g-s1-150276/2026-midterms-democrats-investigations",
-     "highlight": "Democrats will have the ability to subpoena records and compel individuals to testify", "fallback": "subpoena records",
+     "highlight": "the ability to subpoena records for review and compel individuals to testify before lawmakers", "fallback": "subpoena records for review",
      "outlet": "NPR", "date": "4 NOV 2026"},
     {"id": "21-cbs-meeks", "line": "in January he will bring a war powers resolution",
      "url": "https://www.cbsnews.com/news/iran-war-democrats-congress-trump/",

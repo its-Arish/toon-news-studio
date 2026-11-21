@@ -1,0 +1,62 @@
+{
+ "type": "FeatureCollection",
+ "name": "Oil/Iran map07-three-roads_1",
+ "historymap": {
+  "version": 1,
+  "settings": {
+   "style": "satellite",
+   "aspect": "16:9",
+   "accent": "#C8312B",
+   "globe": true,
+   "pitch": false,
+   "labels": false,
+   "pace": 1,
+   "title": "",
+   "subtitle": "",
+   "watermark": "",
+   "format": "mp4",
+   "quality": 2,
+   "fillOpacity": 0.5,
+   "borders": true,
+   "fromSpace": false,
+   "zoomHop": false
+  },
+  "regions": [
+   {
+    "id": "IRN",
+    "kind": "country",
+    "name": "Iran",
+    "color": "#C8312B"
+   },
+   {
+    "id": "USA",
+    "kind": "country",
+    "name": "United States of America",
+    "color": "#2F6FD6"
+   }
+  ],
+  "arrows": [],
+  "shot": {
+   "durMs": 2233.333,
+   "from": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 16.0
+   },
+   "to": {
+    "center": [
+     -22.0,
+     30.0
+    ],
+    "qz": 1.6818
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1005
+  }
+ },
+ "features": []
+}

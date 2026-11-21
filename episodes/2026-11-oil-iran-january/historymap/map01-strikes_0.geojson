@@ -1,0 +1,63 @@
+{
+ "type": "FeatureCollection",
+ "name": "Oil/Iran map01-strikes_0",
+ "historymap": {
+  "version": 1,
+  "settings": {
+   "style": "satellite",
+   "aspect": "16:9",
+   "accent": "#C8312B",
+   "globe": true,
+   "pitch": false,
+   "labels": false,
+   "pace": 1,
+   "title": "",
+   "subtitle": "",
+   "watermark": "",
+   "format": "mp4",
+   "quality": 2,
+   "fillOpacity": 0.5,
+   "borders": true,
+   "fromSpace": false,
+   "zoomHop": false
+  },
+  "regions": [
+   {
+    "id": "IRN",
+    "kind": "country",
+    "name": "Iran",
+    "color": "#C8312B"
+   },
+   {
+    "id": "ISR",
+    "kind": "country",
+    "name": "Israel",
+    "color": "#2F6FD6"
+   }
+  ],
+  "arrows": [],
+  "shot": {
+   "durMs": 2600.0,
+   "from": {
+    "center": [
+     44.0,
+     31.0
+    ],
+    "qz": 9.1896
+   },
+   "to": {
+    "center": [
+     44.0,
+     31.0
+    ],
+    "qz": 9.1896
+   },
+   "space": true,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1170,
+   "spaceFrac": 0.75
+  }
+ },
+ "features": []
+}

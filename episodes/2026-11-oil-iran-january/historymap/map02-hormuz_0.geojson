@@ -1,0 +1,56 @@
+{
+ "type": "FeatureCollection",
+ "name": "Oil/Iran map02-hormuz_0",
+ "historymap": {
+  "version": 1,
+  "settings": {
+   "style": "satellite",
+   "aspect": "16:9",
+   "accent": "#C8312B",
+   "globe": false,
+   "pitch": false,
+   "labels": false,
+   "pace": 1,
+   "title": "",
+   "subtitle": "",
+   "watermark": "",
+   "format": "mp4",
+   "quality": 2,
+   "fillOpacity": 0.5,
+   "borders": true,
+   "fromSpace": false,
+   "zoomHop": false
+  },
+  "regions": [
+   {
+    "id": "IRN",
+    "kind": "country",
+    "name": "Iran",
+    "color": "#C8312B"
+   }
+  ],
+  "arrows": [],
+  "shot": {
+   "durMs": 2500.0,
+   "from": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 12.1257
+   },
+   "to": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 18.3792
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1125
+  }
+ },
+ "features": []
+}

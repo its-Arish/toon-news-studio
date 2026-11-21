@@ -1,0 +1,49 @@
+{
+ "type": "FeatureCollection",
+ "name": "Oil/Iran map05-carriers_0",
+ "historymap": {
+  "version": 1,
+  "settings": {
+   "style": "satellite",
+   "aspect": "16:9",
+   "accent": "#C8312B",
+   "globe": false,
+   "pitch": false,
+   "labels": false,
+   "pace": 1,
+   "title": "",
+   "subtitle": "",
+   "watermark": "",
+   "format": "mp4",
+   "quality": 2,
+   "fillOpacity": 0.5,
+   "borders": true,
+   "fromSpace": false,
+   "zoomHop": false
+  },
+  "regions": [],
+  "arrows": [],
+  "shot": {
+   "durMs": 1800.0,
+   "from": {
+    "center": [
+     55.0,
+     20.0
+    ],
+    "qz": 4.7568
+   },
+   "to": {
+    "center": [
+     55.0,
+     20.0
+    ],
+    "qz": 5.8563
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 810
+  }
+ },
+ "features": []
+}

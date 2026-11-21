@@ -22,6 +22,8 @@ Usage (on your own machine; needs internet):
   python3 tools/news_shots.py episodes/2026-11-oil-iran-january/news_shots.json
   python3 tools/news_shots.py <json> --only 12-cnbc-brent-90
   python3 tools/news_shots.py <json> --profile ~/.toon-news-chrome --headed --chrome   # paywalls / bot checks
+  python3 tools/news_shots.py <json> --browser "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" --headed
+  python3 tools/news_shots.py <json> --keep-images   # don't blur photos (default blurs them: no real faces)
   python3 tools/news_shots.py <json> --no-dim                                           # keep the page bright
   python3 tools/news_shots.py <json> --reuse     # re-animate from saved screenshots, no browser
 
@@ -55,9 +57,58 @@ JS_CLEAN = r"""
     const z = parseInt(cs.zIndex || '0') || 0;
     if (area > 0.25 || (z > 100 && area > 0.04) || r.top > vh * 0.6) el.style.setProperty('display', 'none', 'important');
   }
+  // inline newsletter / sign-up boxes sit between paragraphs and cover the sentence
+  for (const el of document.querySelectorAll('[id*="newsletter" i], [class*="newsletter" i], form[class*="subscribe" i]')) {
+    if (el.closest('header, nav') || (el.innerText || '').length > 600) continue;
+    el.style.setProperty('display', 'none', 'important');
+  }
   for (const el of [document.documentElement, document.body]) {
     el.style.setProperty('overflow', 'auto', 'important');
     el.style.setProperty('position', 'static', 'important');
+  }
+}
+"""
+
+# real people: no photos of faces. Every photo / video / large background image on the page is blurred
+# before the screenshot, thumbnails included (logos and icons stay sharp: header/logo images and anything under ~40x36 px).
+JS_BLUR = r"""
+() => {
+  const big = r => r.width >= 40 && r.height >= 36 && r.width * r.height >= 2500;
+  // byline / author headshots are faces however small they are: always blurred
+  const isFace = el => {
+    if (/avatar|author|byline|headshot|profile|contributor|bio/i.test((el.getAttribute('src') || '') + ' ' + (el.getAttribute('alt') || '') + ' ' + (el.className || ''))) return true;
+    for (let a = el.parentElement, i = 0; a && i < 4 && a !== document.body; a = a.parentElement, i++)
+      if (/avatar|author|byline|headshot|contributor/i.test(String(a.className || '') + ' ' + a.id)) return true;
+    return parseFloat(getComputedStyle(el).borderRadius) >= Math.min(el.clientWidth, el.clientHeight) * 0.4;   // round photo
+  };
+  // logo = inside the site header, or the image / one of its 3 nearest parents is named "logo"
+  // (not any ancestor: WordPress puts "custom-logo" on <body>, which would exempt every photo)
+  const isLogo = el => {
+    if (el.closest('header') || /logo/i.test((el.getAttribute('src') || '') + (el.getAttribute('alt') || ''))) return true;
+    for (let a = el, i = 0; a && i < 4 && a !== document.body; a = a.parentElement, i++)
+      if (/logo/i.test(((a.className && a.className.baseVal !== undefined) ? a.className.baseVal : (a.className || '')) + ' ' + a.id)) return true;
+    return false;
+  };
+  for (const el of document.querySelectorAll('img, picture, video, iframe, canvas, [style*="background-image"], figure *')) {
+    const tag = el.tagName;
+    const isMedia = /IMG|PICTURE|VIDEO|IFRAME|CANVAS/.test(tag) || getComputedStyle(el).backgroundImage.includes('url(');
+    if (isMedia && !isLogo(el) && (el.innerText || '').trim().length < 40 && big(el.getBoundingClientRect())) el.style.setProperty('filter', 'blur(22px)', 'important');
+  }
+  // a stylesheet also catches photos that load or appear after this pass (lazy images, opened "read more" blocks);
+  // logos and tiny loaded icons are exempt (never byline headshots)
+  if (!document.getElementById('__nofaces')) {
+    const st = document.createElement('style'); st.id = '__nofaces';
+    st.textContent = `img, picture, video, iframe, canvas { filter: blur(22px) !important; }
+      header img, header svg, img[src*="logo" i], img[alt*="logo" i], [data-keep] { filter: none !important; }`;
+    document.head.appendChild(st);
+  }
+  for (const el of document.querySelectorAll('img, picture, video, iframe, canvas')) {
+    const r = el.getBoundingClientRect();
+    if (isLogo(el) || (el.tagName === 'IMG' && el.complete && el.naturalWidth > 0 && r.width > 0 && !big(r) && !isFace(el))) el.setAttribute('data-keep', '1');
+  }
+  for (const el of document.querySelectorAll('div, section, a, span')) {
+    const bg = getComputedStyle(el).backgroundImage;
+    if (bg && bg.includes('url(') && !isLogo(el) && el.innerText.trim().length < 40 && big(el.getBoundingClientRect())) el.style.setProperty('filter', 'blur(22px)', 'important');
   }
 }
 """
@@ -67,30 +118,56 @@ JS_FIND = r"""
 ([want, extra]) => {
   const norm = s => s.toLowerCase().replace(/[‘’‛]/g, "'").replace(/[“”]/g, '"')
                     .replace(/[–—]/g, '-').replace(/ /g, ' ');
-  const target = norm(want).replace(/\s+/g, ' ').trim();
+  // whitespace is ignored on both sides, so a sentence that crosses a link or <em> boundary still matches
+  const target = norm(want).replace(/\s+/g, '');
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode: n => {
       const p = n.parentElement; if (!p) return NodeFilter.FILTER_REJECT;
       const cs = getComputedStyle(p);
       if (cs.display === 'none' || cs.visibility === 'hidden' || /SCRIPT|STYLE|NOSCRIPT/.test(p.tagName)) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT; } });
-  let flat = '', map = [], lastSpace = true, n;
+  let flat = '', map = [], n;
   while ((n = walker.nextNode())) {
     const t = norm(n.data);
     for (let i = 0; i < t.length; i++) {
-      const ch = /\s/.test(t[i]) ? ' ' : t[i];
-      if (ch === ' ' && lastSpace) continue;
-      flat += ch; map.push([n, i]); lastSpace = ch === ' ';
+      if (/\s/.test(t[i])) continue;
+      flat += t[i]; map.push([n, i]);
     }
-    if (!lastSpace) { flat += ' '; map.push([n, n.data.length]); lastSpace = true; }
   }
   const at = flat.indexOf(target);
   if (at < 0) return null;
   const [sn, so] = map[at], [en, eo] = map[at + target.length - 1];
   const range = document.createRange();
   range.setStart(sn, so); range.setEnd(en, Math.min(eo + 1, en.data.length));
+  // "read more" collapses (max-height + overflow:hidden) keep the sentence in the DOM but clip it: open them
+  for (let e = sn.parentElement; e && e !== document.body; e = e.parentElement) {
+    const cs = getComputedStyle(e);
+    if (e.scrollHeight > e.clientHeight + 4 && /hidden|clip/.test(cs.overflowY) && e.clientHeight < innerHeight * 3) {
+      e.style.setProperty('max-height', 'none', 'important'); e.style.setProperty('height', 'auto', 'important');
+      e.style.setProperty('overflow', 'visible', 'important');
+      e.style.setProperty('-webkit-mask-image', 'none', 'important'); e.style.setProperty('mask-image', 'none', 'important');
+    }
+  }
+  for (const b of document.querySelectorAll('[class*="read-more" i] button, [class*="read-more" i] a[role="button"], [class*="readmore" i] button, [class*="revcontent-read-more" i]:not([class*="content"])'))
+    if (!b.closest('[class*="content"]') || b.tagName === 'BUTTON') b.style.setProperty('display', 'none', 'important');
   const r0 = range.getBoundingClientRect();
-  window.scrollBy(0, r0.top - innerHeight * 0.42 + (extra || 0));
+  const dy = r0.top - innerHeight * 0.42 + (extra || 0);
+  // instant scroll (pages with scroll-behavior:smooth would otherwise be measured mid-animation);
+  // if the window can't scroll (body locked, or the article scrolls inside a container), scroll that
+  document.documentElement.style.scrollBehavior = 'auto'; document.body.style.scrollBehavior = 'auto';
+  if (Math.abs(dy) > 4) {
+    const y0 = scrollY;
+    window.scrollTo({ top: y0 + dy, behavior: 'instant' });
+    if (Math.abs(scrollY - y0) < 2) {
+      document.documentElement.style.overflow = 'auto'; document.body.style.overflow = 'auto';
+      window.scrollTo({ top: y0 + dy, behavior: 'instant' });
+    }
+    if (Math.abs(scrollY - y0) < 2) {
+      let el = sn.parentElement;
+      while (el && !(el.scrollHeight > el.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(el).overflowY))) el = el.parentElement;
+      if (el) { el.style.scrollBehavior = 'auto'; el.scrollTop += dy; }
+    }
+  }
   const rects = [...range.getClientRects()].filter(r => r.width > 2 && r.height > 4)
                  .map(r => ({x0: r.left, y0: r.top, x1: r.right, y1: r.bottom}));
   rects.sort((a, b) => a.y0 - b.y0 || a.x0 - b.x0);
@@ -101,6 +178,8 @@ JS_FIND = r"""
     else lines.push({...r});
   }
   lines.sort((a, b) => a.y0 - b.y0);
+  // never hand back a marker that is off the screen
+  if (!lines.length || lines[0].y0 < 0 || lines[lines.length - 1].y1 > innerHeight) return { lines: [], offscreen: true };
   return { lines, vw: innerWidth, vh: innerHeight };
 }
 """
@@ -116,8 +195,16 @@ def dismiss_popups(page):
                     page.wait_for_timeout(500)
             except Exception:
                 pass
-    try:
-        page.keyboard.press("Escape")
+    for sel in ['[aria-label="Close" i]', '[aria-label="close dialog" i]', '[aria-label="Dismiss" i]', 'button[class*="close" i]']:
+        try:
+            el = page.locator(sel)
+            if el.count() and el.first.is_visible():
+                el.first.click(timeout=1500); page.wait_for_timeout(400)
+        except Exception:
+            pass
+    try:   # Escape only when a dialog is open: on some sites (Yahoo) Escape is a shortcut to the home page
+        if page.evaluate("() => [...document.querySelectorAll('dialog[open], [role=dialog], [aria-modal=true]')].some(e => e.getBoundingClientRect().width > 0)"):
+            page.keyboard.press("Escape")
     except Exception:
         pass
 
@@ -261,6 +348,8 @@ def main():
     ap.add_argument("--profile", help="persistent browser profile dir (sign in once, reuse cookies)")
     ap.add_argument("--headed", action="store_true", help="show the browser (helps with bot checks)")
     ap.add_argument("--chrome", action="store_true", help="use installed Google Chrome instead of Playwright Chromium")
+    ap.add_argument("--browser", help="path to a Chromium-based browser to drive (e.g. Brave) instead of Playwright Chromium")
+    ap.add_argument("--keep-images", action="store_true", help="do not blur photos on the page (default blurs them: no photos of real faces)")
     ap.add_argument("--no-dim", action="store_true", help="keep the rest of the page bright")
     ap.add_argument("--reuse", action="store_true", help="skip the browser; re-animate from raw/<id>.png + raw/<id>.json")
     a = ap.parse_args()
@@ -295,6 +384,9 @@ def main():
         launch = dict(headless=not a.headed)
         if a.chrome:
             launch["channel"] = "chrome"
+        if a.browser:
+            launch["executable_path"] = os.path.expanduser(a.browser)
+            kw.pop("user_agent")          # a spoofed UA that doesn't match the real browser trips bot checks (Akamai)
         if a.profile:
             ctx = pw.chromium.launch_persistent_context(os.path.expanduser(a.profile), **launch, **kw)
         else:
@@ -304,19 +396,60 @@ def main():
             sid = s["id"]
             print(f"[{sid}] {s['url']}")
             try:
-                page.goto(s["url"], wait_until="domcontentloaded", timeout=45000)
+                try:
+                    page.goto(s["url"], wait_until="domcontentloaded", timeout=45000)
+                except Exception as e:          # ad-heavy pages: the article is usually there long before the load event
+                    if "Timeout" not in str(e): raise
+                    print("   (slow page: stopped loading after 45 s, using what is there)")
+                    page.evaluate("window.stop()")
                 page.wait_for_timeout(2500)
-                dismiss_popups(page)
-                page.evaluate(JS_CLEAN)
-                page.wait_for_timeout(400)
                 geo, used = None, None
-                for phrase in [s["highlight"], s.get("fallback")]:
-                    if phrase:
-                        geo = page.evaluate(JS_FIND, [phrase, s.get("scroll_extra", 0)])
-                        if geo and geo["lines"]:
-                            used = phrase; break
-                        geo = None
+                url0, clean = page.url, True
+                for attempt in range(3):        # consent pages redirect once, which kills the first evaluate
+                    try:
+                        if attempt and page.url.split('?')[0] != url0.split('?')[0]:
+                            # the page navigated away (a redirect, or a site shortcut): go back to the article
+                            # and leave its layout alone this time
+                            print("   (page navigated away; reloading the article)")
+                            page.goto(url0, wait_until="domcontentloaded", timeout=45000)
+                            page.wait_for_timeout(2500); clean = False
+                        dismiss_popups(page)
+                        if clean: page.evaluate(JS_CLEAN)
+                        page.wait_for_timeout(400)
+                        for phrase in [s["highlight"], s.get("fallback")]:
+                            if phrase:
+                                geo = page.evaluate(JS_FIND, [phrase, s.get("scroll_extra", 0)])
+                                if geo and geo["lines"]:
+                                    used = phrase; break
+                                geo = None
+                        break
+                    except Exception as e:
+                        if "Execution context was destroyed" not in str(e) or attempt == 2: raise
+                        page.wait_for_load_state("domcontentloaded", timeout=30000)
+                        page.wait_for_timeout(2500)
                 page.wait_for_timeout(800)            # lazy images settle after the scroll
+                if geo:
+                    # late pop-ups and lazy-loaded ads move or cover the text: clean again, then re-measure
+                    # (and re-scroll) until the sentence stops moving, so the marker lands on the words
+                    dismiss_popups(page)
+                    try:
+                        if clean: page.evaluate(JS_CLEAN)
+                    except Exception: pass
+                    for _ in range(4):
+                        g2 = page.evaluate(JS_FIND, [used, s.get("scroll_extra", 0)])
+                        if not g2 or not g2["lines"]: break
+                        moved = abs(g2["lines"][0]["y0"] - geo["lines"][0]["y0"]); geo = g2
+                        page.wait_for_timeout(700)
+                        if moved < 2: break
+                if not a.keep_images:
+                    page.evaluate(JS_BLUR); page.wait_for_timeout(300)
+                if geo:
+                    # last measure right before the shot: late reflows must not leave the marker on other words
+                    g3 = page.evaluate(JS_FIND, [used, s.get("scroll_extra", 0)])
+                    if g3 and g3["lines"]: geo = g3
+                    page.wait_for_timeout(600)
+                    if not a.keep_images: page.evaluate(JS_BLUR)   # images revealed by the last expand / scroll
+                    page.wait_for_timeout(300)
                 page.screenshot(path=str(rawdir / f"{sid}.png"))
                 if not geo:
                     report[sid] = {"status": "NOT FOUND", "note": "clean screenshot in raw/; fix 'highlight' to the page's real words"}

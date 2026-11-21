@@ -5,3 +5,7 @@ __pycache__/
 # news_shots raw screenshots
 episodes/*/news_shots/raw/
 episodes/*/rigtest/out/
+
+# History Map recordings before conform; node_modules link
+episodes/*/historymap/raw/
+node_modules

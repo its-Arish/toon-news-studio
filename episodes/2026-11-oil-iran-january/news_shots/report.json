@@ -1,0 +1,156 @@
+{
+  "01-npr-epstein-3m": {
+    "status": "ok",
+    "highlighted": "released more than 3 million pages, including more than 2,000 videos and 180,000 images",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "02-npr-not-wrongdoing": {
+    "status": "ok",
+    "highlighted": "is not a sign of wrongdoing or association with Epstein's crimes",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "03-indy-clinton-hours": {
+    "status": "skipped",
+    "note": "page gone: Independent/AOL article now returns \"the page you are looking for does not exist\""
+  },
+  "04-wrap-massie": {
+    "status": "ok",
+    "highlighted": "Bombing a country on the other side of the globe won't make the Epstein files go away",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "05-newsweek-poll": {
+    "status": "ok",
+    "highlighted": "52-40 majority of voters felt the Iran war was at least in part a distraction from the Epstein files issue",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "06-wh-true-morons": {
+    "status": "ok",
+    "highlighted": "such a ridiculous take that it could only be concocted by true morons",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "07-abc-oil-126": {
+    "status": "ok",
+    "highlighted": "its highest price in four years",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "08-wusf-bondi": {
+    "status": "ok",
+    "highlighted": "who was ousted in April after facing criticism over her handling of them",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "09-pbs-63pct": {
+    "status": "ok",
+    "highlighted": "63% of Americans blame Trump for high gas prices",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "10-yahoo-senate-9": {
+    "status": "ok",
+    "highlighted": "the most in nearly 70 years",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "11-reuters-71pct": {
+    "status": "ok",
+    "highlighted": "want Congress to pass legislation ending the conflict",
+    "seconds": 4.0,
+    "lines": 2,
+    "note": "clip from the first run (checked); later re-runs hit a Cloudflare bot check, clip kept"
+  },
+  "12-cnbc-brent-90": {
+    "status": "ok",
+    "highlighted": "Brent crude briefly fell below $90 a barrel for the first time since August",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "13-aaa-under-4": {
+    "status": "ok",
+    "highlighted": "fell below $4 per gallon for the first time since July",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "14-cnbc-80pct": {
+    "status": "ok",
+    "highlighted": "reaching more than 80% of pre-war levels in October",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "15-spg-surplus": {
+    "status": "ok",
+    "highlighted": "global oil supplies surpassing demand for the first time since the outbreak of the war in Iran",
+    "seconds": 4.04,
+    "lines": 3
+  },
+  "16-gcaptain-65pct": {
+    "status": "ok",
+    "highlighted": "Combined traffic remains approximately 65% below pre-conflict levels",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "17-aj-third-carrier": {
+    "status": "ok",
+    "highlighted": "has deployed a third aircraft carrier to the Middle East",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "18-axios-massie-218": {
+    "status": "ok",
+    "highlighted": "secured the 218 signatures needed to force another House showdown over the Jeffrey Epstein files",
+    "seconds": 4.0,
+    "lines": 2,
+    "note": "clip from the first run (checked); later re-runs hit a Cloudflare bot check, clip kept"
+  },
+  "19-yahoo-greene": {
+    "status": "ok",
+    "highlighted": "Donald Trump is the one that blocked the Epstein Files from being released",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "20-npr-subpoena": {
+    "status": "ok",
+    "highlighted": "the ability to subpoena records for review and compel individuals to testify before lawmakers",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "21-cbs-meeks": {
+    "status": "ok",
+    "highlighted": "I will introduce a War Powers Resolution",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "22-cbs-new-year": {
+    "status": "ok",
+    "highlighted": "We'll see what happens after the new year starts",
+    "seconds": 4.0,
+    "lines": 1
+  },
+  "23-bloomberg-dec11": {
+    "status": "skipped",
+    "note": "Bloomberg \"Press & Hold\" bot check + paywall; needs a signed-in browser profile (see BROLL.md)"
+  },
+  "24-bnp-78": {
+    "status": "ok",
+    "highlighted": "Brent oil prices to average $78 a barrel from January to March 2027",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "25-eia-diesel": {
+    "status": "ok",
+    "highlighted": "diesel price averages $5.03 per gallon",
+    "seconds": 4.0,
+    "lines": 2
+  },
+  "26-ap-thanksgiving": {
+    "status": "ok",
+    "highlighted": "gasoline would be more expensive this Thanksgiving Day than any previous",
+    "seconds": 4.0,
+    "lines": 2
+  }
+}

@@ -1,0 +1,56 @@
+{
+ "type": "FeatureCollection",
+ "name": "Oil/Iran map03-blockade_1",
+ "historymap": {
+  "version": 1,
+  "settings": {
+   "style": "satellite",
+   "aspect": "16:9",
+   "accent": "#C8312B",
+   "globe": false,
+   "pitch": false,
+   "labels": false,
+   "pace": 1,
+   "title": "",
+   "subtitle": "",
+   "watermark": "",
+   "format": "mp4",
+   "quality": 2,
+   "fillOpacity": 0.5,
+   "borders": true,
+   "fromSpace": false,
+   "zoomHop": false
+  },
+  "regions": [
+   {
+    "id": "IRN",
+    "kind": "country",
+    "name": "Iran",
+    "color": "#C8312B"
+   }
+  ],
+  "arrows": [],
+  "shot": {
+   "durMs": 2133.333,
+   "from": {
+    "center": [
+     55.2,
+     26.7
+    ],
+    "qz": 18.3792
+   },
+   "to": {
+    "center": [
+     54.5,
+     27.0
+    ],
+    "qz": 21.1121
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 960
+  }
+ },
+ "features": []
+}

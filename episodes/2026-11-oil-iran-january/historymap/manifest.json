@@ -1,0 +1,1210 @@
+[
+ {
+  "seg": "map01-strikes_0",
+  "shot_id": "map01-strikes",
+  "k": 0,
+  "line": "on the 28th of February, the United States and Israel launched strikes on Iran",
+  "offset": 0,
+  "frames": 78,
+  "shot_frames": 157,
+  "srt_start": 63.453,
+  "file": "historymap/map01-strikes_0.geojson",
+  "shot": {
+   "durMs": 2600.0,
+   "from": {
+    "center": [
+     44.0,
+     31.0
+    ],
+    "qz": 9.1896
+   },
+   "to": {
+    "center": [
+     44.0,
+     31.0
+    ],
+    "qz": 9.1896
+   },
+   "space": true,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1170,
+   "spaceFrac": 0.75
+  },
+  "globe": true,
+  "rise": false,
+  "regions": [
+   "IRN",
+   "ISR"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "TEHRAN",
+    "ll": [
+     51.39,
+     35.69
+    ],
+    "style": "dot",
+    "at": 2.05
+   }
+  ],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map01-strikes_1",
+  "shot_id": "map01-strikes",
+  "k": 1,
+  "line": "on the 28th of February, the United States and Israel launched strikes on Iran",
+  "offset": 78,
+  "frames": 79,
+  "shot_frames": 157,
+  "srt_start": 63.453,
+  "file": "historymap/map01-strikes_1.geojson",
+  "shot": {
+   "durMs": 2633.333,
+   "from": {
+    "center": [
+     44.0,
+     31.0
+    ],
+    "qz": 9.1896
+   },
+   "to": {
+    "center": [
+     46.0,
+     32.0
+    ],
+    "qz": 11.7127
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1185
+  },
+  "globe": true,
+  "rise": false,
+  "regions": [
+   "IRN",
+   "ISR"
+  ],
+  "narr": 1,
+  "arrow_times_ms": [
+   [
+    300.0,
+    1500.0
+   ]
+  ],
+  "arrows": [
+   {
+    "from": [
+     34.9,
+     31.6
+    ],
+    "to": [
+     51.39,
+     35.69
+    ],
+    "label": "28 FEB",
+    "color": "#ffffff",
+    "at": 0.3,
+    "end": 1.5,
+    "label_ll": [
+     34.9,
+     31.6
+    ]
+   }
+  ],
+  "pins": [
+   {
+    "name": "TEHRAN",
+    "ll": [
+     51.39,
+     35.69
+    ],
+    "style": "dot",
+    "at": -1
+   }
+  ],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map02-hormuz_0",
+  "shot_id": "map02-hormuz",
+  "k": 0,
+  "line": "It shut the Strait of Hormuz, the narrow strip of water between Iran and Oman that carries close to a fifth of the world's oil",
+  "offset": 0,
+  "frames": 75,
+  "shot_frames": 223,
+  "srt_start": 120.4,
+  "file": "historymap/map02-hormuz_0.geojson",
+  "shot": {
+   "durMs": 2500.0,
+   "from": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 12.1257
+   },
+   "to": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 18.3792
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1125
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "STRAIT OF HORMUZ",
+    "ll": [
+     56.45,
+     26.55
+    ],
+    "style": "dot",
+    "at": 1.2
+   }
+  ],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map02-hormuz_1",
+  "shot_id": "map02-hormuz",
+  "k": 1,
+  "line": "It shut the Strait of Hormuz, the narrow strip of water between Iran and Oman that carries close to a fifth of the world's oil",
+  "offset": 75,
+  "frames": 74,
+  "shot_frames": 223,
+  "srt_start": 120.4,
+  "file": "historymap/map02-hormuz_1.geojson",
+  "shot": {
+   "durMs": 2466.667,
+   "from": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 18.3792
+   },
+   "to": {
+    "center": [
+     56.43,
+     26.53
+    ],
+    "qz": 39.3966
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1350
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN",
+   "OMN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "STRAIT OF HORMUZ",
+    "ll": [
+     56.45,
+     26.55
+    ],
+    "style": "dot",
+    "at": -1
+   }
+  ],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map02-hormuz_2",
+  "shot_id": "map02-hormuz",
+  "k": 2,
+  "line": "It shut the Strait of Hormuz, the narrow strip of water between Iran and Oman that carries close to a fifth of the world's oil",
+  "offset": 149,
+  "frames": 74,
+  "shot_frames": 223,
+  "srt_start": 120.4,
+  "file": "historymap/map02-hormuz_2.geojson",
+  "shot": {
+   "durMs": 2466.667,
+   "from": {
+    "center": [
+     56.43,
+     26.53
+    ],
+    "qz": 39.3966
+   },
+   "to": {
+    "center": [
+     56.45,
+     26.55
+    ],
+    "qz": 73.5167
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1110
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN",
+   "OMN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "STRAIT OF HORMUZ",
+    "ll": [
+     56.45,
+     26.55
+    ],
+    "style": "dot",
+    "at": -1
+   }
+  ],
+  "labels": [
+   {
+    "text": "~1/5 OF THE WORLD'S OIL",
+    "ll": [
+     58.2,
+     25.2
+    ],
+    "at": 0.7
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map03-blockade_0",
+  "shot_id": "map03-blockade",
+  "k": 0,
+  "line": "In July, the US Navy put its blockade of Iranian ports back in place, and Iran kept hitting ships",
+  "offset": 0,
+  "frames": 64,
+  "shot_frames": 192,
+  "srt_start": 151.08,
+  "file": "historymap/map03-blockade_0.geojson",
+  "shot": {
+   "durMs": 2133.333,
+   "from": {
+    "center": [
+     56.0,
+     26.4
+    ],
+    "qz": 16.0
+   },
+   "to": {
+    "center": [
+     55.2,
+     26.7
+    ],
+    "qz": 18.3792
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 960
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [],
+  "labels": [
+   {
+    "text": "US BLOCKADE · 14 JULY",
+    "ll": [
+     55.0,
+     25.6
+    ],
+    "at": 1.6
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map03-blockade_1",
+  "shot_id": "map03-blockade",
+  "k": 1,
+  "line": "In July, the US Navy put its blockade of Iranian ports back in place, and Iran kept hitting ships",
+  "offset": 64,
+  "frames": 64,
+  "shot_frames": 192,
+  "srt_start": 151.08,
+  "file": "historymap/map03-blockade_1.geojson",
+  "shot": {
+   "durMs": 2133.333,
+   "from": {
+    "center": [
+     55.2,
+     26.7
+    ],
+    "qz": 18.3792
+   },
+   "to": {
+    "center": [
+     54.5,
+     27.0
+    ],
+    "qz": 21.1121
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 960
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "BANDAR ABBAS",
+    "ll": [
+     56.27,
+     27.18
+    ],
+    "style": "dot",
+    "at": 0.75
+   },
+   {
+    "name": "KHARG ISLAND",
+    "ll": [
+     50.32,
+     29.24
+    ],
+    "style": "dot",
+    "at": 1.3
+   }
+  ],
+  "labels": [
+   {
+    "text": "US BLOCKADE · 14 JULY",
+    "ll": [
+     55.0,
+     25.6
+    ],
+    "at": -1
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map03-blockade_2",
+  "shot_id": "map03-blockade",
+  "k": 2,
+  "line": "In July, the US Navy put its blockade of Iranian ports back in place, and Iran kept hitting ships",
+  "offset": 128,
+  "frames": 64,
+  "shot_frames": 192,
+  "srt_start": 151.08,
+  "file": "historymap/map03-blockade_2.geojson",
+  "shot": {
+   "durMs": 2133.333,
+   "from": {
+    "center": [
+     54.5,
+     27.0
+    ],
+    "qz": 21.1121
+   },
+   "to": {
+    "center": [
+     54.0,
+     27.5
+    ],
+    "qz": 26.9087
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 960
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "BANDAR ABBAS",
+    "ll": [
+     56.27,
+     27.18
+    ],
+    "style": "dot",
+    "at": -1
+   },
+   {
+    "name": "KHARG ISLAND",
+    "ll": [
+     50.32,
+     29.24
+    ],
+    "style": "dot",
+    "at": -1
+   }
+  ],
+  "labels": [
+   {
+    "text": "US BLOCKADE · 14 JULY",
+    "ll": [
+     55.0,
+     25.6
+    ],
+    "at": -1
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map04-escape_0",
+  "shot_id": "map04-escape",
+  "k": 0,
+  "line": "Tankers started slipping through the southern side of the strait ... pipelines that skip Hormuz completely",
+  "offset": 0,
+  "frames": 90,
+  "shot_frames": 331,
+  "srt_start": 237.76,
+  "file": "historymap/map04-escape_0.geojson",
+  "shot": {
+   "durMs": 3000.0,
+   "from": {
+    "center": [
+     56.75,
+     26.25
+    ],
+    "qz": 64.0
+   },
+   "to": {
+    "center": [
+     56.6,
+     26.2
+    ],
+    "qz": 59.7141
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1350
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [],
+  "narr": 1,
+  "arrow_times_ms": [
+   [
+    1000.0,
+    2600.0
+   ]
+  ],
+  "arrows": [
+   {
+    "from": [
+     55.6,
+     26.0
+    ],
+    "to": [
+     57.6,
+     25.4
+    ],
+    "label": "TRACKERS OFF",
+    "color": "#ffe14d",
+    "at": 1.0,
+    "end": 2.6,
+    "label_ll": [
+     55.6,
+     26.0
+    ]
+   }
+  ],
+  "pins": [],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map04-escape_1",
+  "shot_id": "map04-escape",
+  "k": 1,
+  "line": "Tankers started slipping through the southern side of the strait ... pipelines that skip Hormuz completely",
+  "offset": 90,
+  "frames": 84,
+  "shot_frames": 331,
+  "srt_start": 237.76,
+  "file": "historymap/map04-escape_1.geojson",
+  "shot": {
+   "durMs": 2800.0,
+   "from": {
+    "center": [
+     56.6,
+     26.2
+    ],
+    "qz": 59.7141
+   },
+   "to": {
+    "center": [
+     54.0,
+     25.6
+    ],
+    "qz": 24.2515
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1260
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [],
+  "narr": 1,
+  "arrow_times_ms": [
+   [
+    -1000,
+    -500
+   ]
+  ],
+  "arrows": [
+   {
+    "from": [
+     55.6,
+     26.0
+    ],
+    "to": [
+     57.6,
+     25.4
+    ],
+    "label": "TRACKERS OFF",
+    "color": "#ffe14d",
+    "at": -1,
+    "end": -1,
+    "label_ll": [
+     55.6,
+     26.0
+    ]
+   }
+  ],
+  "pins": [],
+  "labels": [
+   {
+    "text": "GUIDED BY US FORCES",
+    "ll": [
+     56.6,
+     24.6
+    ],
+    "at": 2.1
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map04-escape_2",
+  "shot_id": "map04-escape",
+  "k": 2,
+  "line": "Tankers started slipping through the southern side of the strait ... pipelines that skip Hormuz completely",
+  "offset": 174,
+  "frames": 84,
+  "shot_frames": 331,
+  "srt_start": 237.76,
+  "file": "historymap/map04-escape_2.geojson",
+  "shot": {
+   "durMs": 2800.0,
+   "from": {
+    "center": [
+     54.0,
+     25.6
+    ],
+    "qz": 24.2515
+   },
+   "to": {
+    "center": [
+     47.0,
+     24.5
+    ],
+    "qz": 10.5561
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 800
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "SAU",
+   "ARE"
+  ],
+  "narr": 1,
+  "arrow_times_ms": [
+   [
+    -1000,
+    -500
+   ]
+  ],
+  "arrows": [
+   {
+    "from": [
+     55.6,
+     26.0
+    ],
+    "to": [
+     57.6,
+     25.4
+    ],
+    "label": "",
+    "color": "#ffe14d",
+    "at": -1,
+    "end": -1,
+    "label_ll": [
+     55.6,
+     26.0
+    ]
+   }
+  ],
+  "pins": [],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map04-escape_3",
+  "shot_id": "map04-escape",
+  "k": 3,
+  "line": "Tankers started slipping through the southern side of the strait ... pipelines that skip Hormuz completely",
+  "offset": 258,
+  "frames": 73,
+  "shot_frames": 331,
+  "srt_start": 237.76,
+  "file": "historymap/map04-escape_3.geojson",
+  "shot": {
+   "durMs": 2433.333,
+   "from": {
+    "center": [
+     47.0,
+     24.5
+    ],
+    "qz": 10.5561
+   },
+   "to": {
+    "center": [
+     47.4,
+     24.4
+    ],
+    "qz": 11.7127
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1095
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "SAU",
+   "ARE"
+  ],
+  "narr": 3,
+  "arrow_times_ms": [
+   [
+    -1000,
+    -500
+   ],
+   [
+    200.0,
+    1000.0
+   ],
+   [
+    600.0,
+    1200.0
+   ]
+  ],
+  "arrows": [
+   {
+    "from": [
+     55.6,
+     26.0
+    ],
+    "to": [
+     57.6,
+     25.4
+    ],
+    "label": "",
+    "color": "#ffe14d",
+    "at": -1,
+    "end": -1,
+    "label_ll": [
+     55.6,
+     26.0
+    ]
+   },
+   {
+    "from": [
+     49.67,
+     25.94
+    ],
+    "to": [
+     38.06,
+     24.09
+    ],
+    "label": "EAST-WEST PIPELINE → YANBU",
+    "color": "#ffffff",
+    "at": 0.2,
+    "end": 1.0,
+    "label_ll": [
+     43.865,
+     25.015
+    ]
+   },
+   {
+    "from": [
+     53.6,
+     23.8
+    ],
+    "to": [
+     56.33,
+     25.12
+    ],
+    "label": "→ FUJAIRAH",
+    "color": "#ffffff",
+    "at": 0.6,
+    "end": 1.2,
+    "label_ll": [
+     54.965,
+     24.46
+    ]
+   }
+  ],
+  "pins": [],
+  "labels": [
+   {
+    "text": "PIPELINES SKIP HORMUZ",
+    "ll": [
+     45.0,
+     21.5
+    ],
+    "at": 1.1
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map05-carriers_0",
+  "shot_id": "map05-carriers",
+  "k": 0,
+  "line": "A third American aircraft carrier just arrived in the region",
+  "offset": 0,
+  "frames": 54,
+  "shot_frames": 108,
+  "srt_start": 279.68,
+  "file": "historymap/map05-carriers_0.geojson",
+  "shot": {
+   "durMs": 1800.0,
+   "from": {
+    "center": [
+     55.0,
+     20.0
+    ],
+    "qz": 4.7568
+   },
+   "to": {
+    "center": [
+     55.0,
+     20.0
+    ],
+    "qz": 5.8563
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 810
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "CARRIER 1",
+    "ll": [
+     61.5,
+     21.0
+    ],
+    "style": "target",
+    "at": 0.2
+   },
+   {
+    "name": "CARRIER 2",
+    "ll": [
+     58.9,
+     23.9
+    ],
+    "style": "target",
+    "at": 0.6
+   }
+  ],
+  "labels": [],
+  "note": "POSITIONS ILLUSTRATIVE"
+ },
+ {
+  "seg": "map05-carriers_1",
+  "shot_id": "map05-carriers",
+  "k": 1,
+  "line": "A third American aircraft carrier just arrived in the region",
+  "offset": 54,
+  "frames": 54,
+  "shot_frames": 108,
+  "srt_start": 279.68,
+  "file": "historymap/map05-carriers_1.geojson",
+  "shot": {
+   "durMs": 1800.0,
+   "from": {
+    "center": [
+     55.0,
+     20.0
+    ],
+    "qz": 5.8563
+   },
+   "to": {
+    "center": [
+     56.5,
+     19.5
+    ],
+    "qz": 6.7272
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 810
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "CARRIER 1",
+    "ll": [
+     61.5,
+     21.0
+    ],
+    "style": "target",
+    "at": -1
+   },
+   {
+    "name": "CARRIER 2",
+    "ll": [
+     58.9,
+     23.9
+    ],
+    "style": "target",
+    "at": -1
+   },
+   {
+    "name": "CARRIER 3",
+    "ll": [
+     63.5,
+     17.5
+    ],
+    "style": "target",
+    "at": 0.1
+   }
+  ],
+  "labels": [
+   {
+    "text": "3 US CARRIERS IN THE REGION",
+    "ll": [
+     56.0,
+     15.0
+    ],
+    "at": 0.9
+   }
+  ],
+  "note": "POSITIONS ILLUSTRATIVE"
+ },
+ {
+  "seg": "map06-tankers-hit_0",
+  "shot_id": "map06-tankers-hit",
+  "k": 0,
+  "line": "Ship traffic through Hormuz is still about sixty-five percent below normal. Tankers are still being hit.",
+  "offset": 0,
+  "frames": 61,
+  "shot_frames": 182,
+  "srt_start": 273.6,
+  "file": "historymap/map06-tankers-hit_0.geojson",
+  "shot": {
+   "durMs": 2033.333,
+   "from": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 24.2515
+   },
+   "to": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 32.0
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 915
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map06-tankers-hit_1",
+  "shot_id": "map06-tankers-hit",
+  "k": 1,
+  "line": "Ship traffic through Hormuz is still about sixty-five percent below normal. Tankers are still being hit.",
+  "offset": 61,
+  "frames": 61,
+  "shot_frames": 182,
+  "srt_start": 273.6,
+  "file": "historymap/map06-tankers-hit_1.geojson",
+  "shot": {
+   "durMs": 2033.333,
+   "from": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 32.0
+   },
+   "to": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 48.5029
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 915
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [],
+  "labels": [
+   {
+    "text": "TRAFFIC −65%",
+    "ll": [
+     58.0,
+     25.0
+    ],
+    "at": 0.9
+   }
+  ],
+  "note": null
+ },
+ {
+  "seg": "map06-tankers-hit_2",
+  "shot_id": "map06-tankers-hit",
+  "k": 2,
+  "line": "Ship traffic through Hormuz is still about sixty-five percent below normal. Tankers are still being hit.",
+  "offset": 122,
+  "frames": 60,
+  "shot_frames": 182,
+  "srt_start": 273.6,
+  "file": "historymap/map06-tankers-hit_2.geojson",
+  "shot": {
+   "durMs": 2000.0,
+   "from": {
+    "center": [
+     56.45,
+     26.4
+    ],
+    "qz": 48.5029
+   },
+   "to": {
+    "center": [
+     56.55,
+     26.35
+    ],
+    "qz": 64.0
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 900
+  },
+  "globe": false,
+  "rise": false,
+  "regions": [
+   "IRN"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [
+   {
+    "name": "TANKER HIT · 20 NOV",
+    "ll": [
+     56.6,
+     26.3
+    ],
+    "style": "target",
+    "at": 0.25
+   }
+  ],
+  "labels": [
+   {
+    "text": "TRAFFIC −65%",
+    "ll": [
+     58.0,
+     25.0
+    ],
+    "at": -1
+   }
+  ],
+  "note": "APPROXIMATE LOCATION"
+ },
+ {
+  "seg": "map07-three-roads_0",
+  "shot_id": "map07-three-roads",
+  "k": 0,
+  "line": "So what happens to oil in January? It comes down to three roads.",
+  "offset": 0,
+  "frames": 54,
+  "shot_frames": 121,
+  "srt_start": 424.12,
+  "file": "historymap/map07-three-roads_0.geojson",
+  "shot": {
+   "durMs": 1800.0,
+   "from": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 24.2515
+   },
+   "to": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 16.0
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 810
+  },
+  "globe": true,
+  "rise": false,
+  "regions": [
+   "IRN",
+   "USA"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [],
+  "labels": [],
+  "note": null
+ },
+ {
+  "seg": "map07-three-roads_1",
+  "shot_id": "map07-three-roads",
+  "k": 1,
+  "line": "So what happens to oil in January? It comes down to three roads.",
+  "offset": 54,
+  "frames": 67,
+  "shot_frames": 121,
+  "srt_start": 424.12,
+  "file": "historymap/map07-three-roads_1.geojson",
+  "shot": {
+   "durMs": 2233.333,
+   "from": {
+    "center": [
+     56.4,
+     26.5
+    ],
+    "qz": 16.0
+   },
+   "to": {
+    "center": [
+     -22.0,
+     30.0
+    ],
+    "qz": 1.6818
+   },
+   "space": false,
+   "drawStartMs": 270,
+   "drawEndMs": 1200,
+   "lateAtMs": 1005
+  },
+  "globe": true,
+  "rise": true,
+  "regions": [
+   "IRN",
+   "USA"
+  ],
+  "narr": 0,
+  "arrow_times_ms": [],
+  "arrows": [],
+  "pins": [],
+  "labels": [],
+  "note": null
+ }
+]
